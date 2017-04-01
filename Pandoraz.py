@@ -8,14 +8,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.0.8
+#                                                               v1.1.0
 
 import time
 import os
 
 
 
-Version = "v1.0.8"
+Version = "v1.1.0"
 
 
 
@@ -62,7 +62,7 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 	print("\n\n", Autor)
 	print("\n{:^80}".format(Version))
 	
-	os.system("Pause > Nul")
+	os.system("TimeOut /NoBreak 1 > Nul")
 	
 
 
@@ -81,6 +81,18 @@ Conty = 0
 #=======================================================================
 
 
+
+
+def Salir(Num=0):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
+	
+	try:
+		time.sleep(1.5)
+		exit(Num)
+	except KeyboardInterrupt:
+		Salir(Num)
+
+
+
 def Redes():
 	
 	pass
@@ -88,7 +100,7 @@ def Redes():
 
 
 
-def EscaneoDeRed():
+def EscaneoDeRed():	# Escaneo De La Red En Busqueda De Redes WiFi Vulnerables.
 	
 	global Bssids, Redes, Red, Cont, Cony, Conty
 	Bssids, Redes, Red, Cont, Cony, Conty = [], [], [], 0, 0, 0
@@ -122,6 +134,7 @@ def EscaneoDeRed():
 				Red = True
 				Redes.append(Y)
 		else:
+			Y = Y.upper()
 			print(" BSSID: {}".format(Y))
 			
 			if Red == True:
@@ -148,18 +161,22 @@ def EscaneoDeRed():
 				
 				Name = X
 				
-				print("\n [*] {} - Nombre de Red: {}".format(Cony, X), end="\t")
+				print("\n [*] {} - Red: {}".format(Cony, X), end="\t")
 			
 			else:
 				
 				Name = Name[-4:]
-				X = X.upper()
 				X = X.split(":")
 				Pass = X[3] + X[4] + Name
 				
 				print("\t Contraseña: {}".format(Pass))
 				
 	else: print("\n\n\t [!] Sin Redes Disponibles... Por Ahora...")
+
+
+
+#=======================================================================
+
 
 
 while True:
@@ -173,12 +190,18 @@ while True:
 	
 	print("\n\n")
 	
-	while True:
-		 
-		print("\r\t Actualizado En " + str(Eny) + " Segundos...", end="")
-		os.system("TimeOut /NoBreak 1 > Nul")
+	try:
+		while True:
+			 
+			print("\r\t Actualizado En " + str(Eny) + " Segundos...", end="")
+			os.system("TimeOut /NoBreak 1 > Nul")
+			
+			if Eny == 1: break
+			
+			Eny -= 1
+	except KeyboardInterrupt:
+		print("\n\n\t [!] Saliendo...")
+		time.sleep(1.5)
+		Dat()
+		Salir(0)
 		
-		if Eny == 1: break
-		
-		Eny -= 1
-
