@@ -8,14 +8,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.0.2
+#                                                               v1.0.3
 
 import time
 import os
 
 
 
-Version = "v1.0.2"
+Version = "v1.0.3"
 
 
 
@@ -80,28 +80,43 @@ Cony = 0
 
 
 
-Comando = "netsh wlan show networks mode=Bssid"
-Cad = os.popen(Comando)
-Cadena = Cad.read()
-Lista = Cadena.split("\n")
-
-for X in Lista:
+def EscaneoDeRed():
 	
-	if "SSID" in X:
-			X = X.split(" : ")[1]			
-			Bssids.append(X)
-
-for Y in Bssids:
+	global Cont, Cony, Bssids
+	Bssids, Cont, Cony = [], 0, 0
 	
-		if Cont % 2 == 0:
-			
-			Cony += 1
-			
-			print("    [*] {} - ESSID: {}".format(Cony, Y), end="\t\t")
-			
-		else:
-			print(" BSSID: {}".format(Y))
-			
-		Cont += 1
+	Comando = "netsh wlan show networks mode=Bssid"
+	Cad = os.popen(Comando)
+	Cadena = Cad.read()
+	Lista = Cadena.split("\n")
+
+	for X in Lista:
+		
+		if "SSID" in X:
+				X = X.split(" : ")[1]			
+				Bssids.append(X)
+
+	for Y in Bssids:
+		
+			if Cont % 2 == 0:
+				
+				Cony += 1
+				
+				print("    [*] {} - ESSID: {}".format(Cony, Y), end="\t\t")
+				
+			else:
+				print(" BSSID: {}".format(Y))
+				
+			Cont += 1
+
+
+while True:
+	
+	os.system("cls && Title WiFiCrk.py                "+\
+			"By: LawlietJH                "+Version+"    ")
+	
+	EscaneoDeRed()
+	
+	time.sleep(12)
 
 
