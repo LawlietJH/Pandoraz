@@ -8,14 +8,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.0.3
+#                                                               v1.0.6
 
 import time
 import os
 
 
 
-Version = "v1.0.3"
+Version = "v1.0.6"
 
 
 
@@ -69,21 +69,29 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 #=======================================================================
 
 
-
+Red = False
+Redes = []
 Bssids = []
 Cont = 0
 Cony = 0
+Conty = 0
 
 
 
 #=======================================================================
 
 
+def Redes():
+	
+	pass
+
+
+
 
 def EscaneoDeRed():
 	
-	global Cont, Cony, Bssids
-	Bssids, Cont, Cony = [], 0, 0
+	global Bssids, Redes, Red, Cont, Cony, Conty
+	Bssids, Redes, Red, Cont, Cony, Conty = [], [], [], 0, 0, 0
 	
 	Comando = "netsh wlan show networks mode=Bssid"
 	Cad = os.popen(Comando)
@@ -92,31 +100,57 @@ def EscaneoDeRed():
 
 	for X in Lista:
 		
+		Conty += 1
+		
+		if Conty == 3:
+			print("\n\n\n\t [+] ", X, "\n\n")
+		
 		if "SSID" in X:
-				X = X.split(" : ")[1]			
-				Bssids.append(X)
+			X = X.split(" : ")[1]			
+			Bssids.append(X)
 
 	for Y in Bssids:
 		
-			if Cont % 2 == 0:
+		if Cont % 2 == 0:
+			
+			Cony += 1
+			
+			if len(Y) > 12:	print("    [*] {} - ESSID: {}".format(Cony, Y), end="\t")
+			else:			print("    [*] {} - ESSID: {}".format(Cony, Y), end="\t\t")
 				
-				Cony += 1
-				
-				print("    [*] {} - ESSID: {}".format(Cony, Y), end="\t\t")
-				
-			else:
-				print(" BSSID: {}".format(Y))
-				
-			Cont += 1
+			if "Totalplay" in Y or "Huawei" in Y:
+				Red = True
+				Redes.append(Y)
+		else:
+			print(" BSSID: {}".format(Y))
+			
+			if Red == True:
+				Redes.append(Y)
+				Red = False
+		
+		Cont += 1
+	
+	Name = ""
+	Pass = ""
 
 
 while True:
 	
-	os.system("cls && Title WiFiCrk.py                "+\
+	os.system("cls && Title Pandoraz.py                "+\
 			"By: LawlietJH                "+Version+"    ")
 	
 	EscaneoDeRed()
 	
-	time.sleep(12)
-
+	Eny = 10
+	
+	print("\n\n")
+	
+	while True:
+		 
+		print("\r\t Actualizado En " + str(Eny) + " Segundos...", end="")
+		os.system("TimeOut /NoBreak 1 > Nul")
+		
+		if Eny == 1: break
+		
+		Eny -= 1
 
