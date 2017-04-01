@@ -8,14 +8,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.0.6
+#                                                               v1.0.8
 
 import time
 import os
 
 
 
-Version = "v1.0.6"
+Version = "v1.0.8"
 
 
 
@@ -130,8 +130,36 @@ def EscaneoDeRed():
 		
 		Cont += 1
 	
+	Cont = 0
+	Cony = 0
 	Name = ""
 	Pass = ""
+	
+	if len(Redes) != 0:
+		print("\n\n\n\n Posibles Contraseñas De Redes:\n")
+		
+		for X in Redes:
+			
+			Cont += 1
+						
+			if Cont % 2 != 0:
+				
+				Cony += 1
+				
+				Name = X
+				
+				print("\n [*] {} - Nombre de Red: {}".format(Cony, X), end="\t")
+			
+			else:
+				
+				Name = Name[-4:]
+				X = X.upper()
+				X = X.split(":")
+				Pass = X[3] + X[4] + Name
+				
+				print("\t Contraseña: {}".format(Pass))
+				
+	else: print("\n\n\t [!] Sin Redes Disponibles... Por Ahora...")
 
 
 while True:
