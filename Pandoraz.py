@@ -9,14 +9,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.2.1
+#                                                               v1.2.2
 
 import time
 import os
 
 
 
-Version = "v1.2.1"
+Version = "v1.2.2"
 
 
 
@@ -133,20 +133,31 @@ Tam = 0
 
 
 #=======================================================================
+			
 
 
-
-def Plus():
+def ObtenerRedes():
 	
-	Conty = 0
+	global Tam
+	Tam = 0
 	xD = ""
 	
-	Comando = "netsh wlan show networks mode=Bssid"
-	Cad = os.popen(Comando)
-	Cadena = Cad.read()
-	Lista = Cadena.split("\n")
+	Cont = 0
+	Cony = 0
+	Conty = 0
 	
-	for X in Lista:
+	ESSID = []	# Nombre De La Red Wifi.
+	BSSID = []	# Dirección MAC De La Red Wifi.
+	Senial = []	# Porcentaje de Señal De La Red Wifi.
+	Canal = []	# Canal De La Red Wifi.
+	Datos = {}	# Diccionario Que Almacenará Las Listas.
+	
+	Comando = "netsh wlan show networks mode=Bssid"
+	Cadena = os.popen(Comando)
+	Cadena = Cadena.read()
+	Cadena = Cadena.split("\n")
+	
+	for X in Cadena:
 		
 		Conty += 1
 		
@@ -157,56 +168,44 @@ def Plus():
 				xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
 					"     apagada y no es compatible con la operación solicitada."
 			else: xD += X
-			
-	return xD
-			
-
-
-def ObtenerRedes():
-	
-	global Tam
-	Tam = 0
-	
-	ESSID = []	# Nombre De La Red Wifi.
-	BSSID = []	# Dirección MAC De La Red Wifi.
-	Senial = []	# Porcentaje de Señal De La Red Wifi.
-	Datos = {}	# Diccionario Que Almacenará Las Listas.
-	
-	Comando = 'netsh wlan show all | findstr -i "ssid señal"'
-	Cadena = os.popen(Comando)
-	Cadena = Cadena.read()
-	Cadena = Cadena.split("REDES")[1]
-	Cadena = Cadena.split("\n")[1:]
-				
-	Cont = 0
-	Cony = 0
-	
-	Dato = Plus()
 	
 	os.system("cls && Title Pandoraz.py                "+\
 			"By: LawlietJH                "+Version+"    ")
-	print(Dato)
+	
+	print(xD)
+	
 	for x in Cadena:
 		
-		Cont += 1
-		
-		if "SSID" in x or "Se" in x:
+		if "SSID" in x:
 			
+			Cont += 1
 			x = x.split(" : ")[1]
-						
+			
 			if Cont == 1:
+				
 				ESSID.append(x)
 				Tam += 1 
+				
 			elif Cont == 2:
+				
 				x = x.upper()
 				BSSID.append(x)
-			elif Cont == 3:
-				Senial.append(x)
 				Cont = 0
+				
+		elif "Se" in x:
+			
+			x = x.split(" : ")[1]
+			Senial.append(x)
+		
+		elif "Canal" in x:
+		
+			x = x.split(" : ")[1]
+			Canal.append(x)
 	
 	Datos["ESSID"] = ESSID
 	Datos["BSSID"] = BSSID
 	Datos["Senial"] = Senial
+	Datos["Canal"] = Canal
 	
 	return Datos
 
@@ -220,17 +219,17 @@ def ImprimirListaWifi(Datos):
 	Redes = []
 	Cont = 0
 	
-	print("\n\n\t      ESSID \t        Señal \t\t       BSSID",
+	print("\n\n\t      ESSID \t        Señal   Canal \t       BSSID",
 	"\n\n ============================================================================\n")
 	
 	for x in range(Tam):
 		
 		if len(Datos["ESSID"][Cont]) > 18:
-			print("    [*] {} - {}\n\t\t\t\t {}\t\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["BSSID"][Cont]))
+			print("    [*] {} - {}\n\t\t\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
 		elif len(Datos["ESSID"][Cont]) > 11:
-			print("    [*] {} - {}\t {}\t\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["BSSID"][Cont]))
+			print("    [*] {} - {}\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
 		else:
-			print("    [*] {} - {}\t\t {}\t\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["BSSID"][Cont]))
+			print("    [*] {} - {}\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
 			
 		getNameRedes(Datos, Cont)
 		
@@ -333,6 +332,8 @@ def Main():
 	while True:
 		
 		Datos = ObtenerRedes()
+		#~ print(Datos)
+		#~ os.system("Pause")
 		ImprimirListaWifi(Datos)
 		getPassRedes()
 		
