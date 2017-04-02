@@ -1,5 +1,6 @@
 # -*- Coding: UTF-8 -*-
 # Python 3
+# Windows
 #
 #   ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ██████╗  █████╗ ███████╗
 #   ██╔══██╗██╔══██╗████╗  ██║██╔══██╗██╔═══██╗██╔══██╗██╔══██╗╚══███╔╝
@@ -8,14 +9,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.1.2
+#                                                               v1.1.4
 
 import time
 import os
 
 
 
-Version = "v1.1.2"
+Version = "v1.1.4"
 
 
 
@@ -56,7 +57,7 @@ Autor = """
 
 def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 	
-	os.system("cls && Title IpMac.py                "+\
+	os.system("cls && Title Pandoraz.py                "+\
 			"By: LawlietJH                "+Version+"    ")
 	print("\n\n", Banner1)
 	print("\n\n", Autor)
@@ -66,7 +67,63 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 	
 
 
+def Salir(Num=0):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
+	
+	try:
+		time.sleep(1.5)
+		exit(Num)
+	except KeyboardInterrupt:
+		Salir(Num)
+
+
+
+#~ Función Que Permite Esconder El Cursor de la Pantalla (La rayita que parpadea xD).
+def HiddenCursor(imp="Hide"):
+	
+	#~ imp = imp.title()		#Devuelve la cadena solo con la primera letra de cada palabra en mayuscula
+	imp = imp.capitalize()		#Devuelve la cadena solo con la primera letra de la primer palabra en mayuscula
+
+	if os.name == 'nt':
+		import msvcrt
+		import ctypes
+
+		class _CursorInfo(ctypes.Structure):
+			_fields_ = [("size", ctypes.c_int),
+						("visible", ctypes.c_byte)]
+	
+	def hide_cursor():
+		if os.name == 'nt':
+			ci = _CursorInfo()
+			handle = ctypes.windll.kernel32.GetStdHandle(-11)
+			ctypes.windll.kernel32.GetConsoleCursorInfo(handle, ctypes.byref(ci))
+			ci.visible = False
+			ctypes.windll.kernel32.SetConsoleCursorInfo(handle, ctypes.byref(ci))
+		elif os.name == 'posix':
+			sys.stdout.write("\033[?25l")
+			sys.stdout.flush()
+
+	def show_cursor():
+		if os.name == 'nt':
+			ci = _CursorInfo()
+			handle = ctypes.windll.kernel32.GetStdHandle(-11)
+			ctypes.windll.kernel32.GetConsoleCursorInfo(handle, ctypes.byref(ci))
+			ci.visible = True
+			ctypes.windll.kernel32.SetConsoleCursorInfo(handle, ctypes.byref(ci))
+		elif os.name == 'posix':
+			sys.stdout.write("\033[?25h")
+			sys.stdout.flush()
+			
+	if imp == "Hide":
+		hide_cursor()
+	elif imp =="Show":
+		show_cursor()
+	else:
+		pass
+
+
+
 #=======================================================================
+
 
 
 Red = False
@@ -105,16 +162,6 @@ def Plus():
 			else: xD += X
 			
 	return xD
-
-
-
-def Salir(Num=0):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
-	
-	try:
-		time.sleep(1.5)
-		exit(Num)
-	except KeyboardInterrupt:
-		Salir(Num)
 
 
 
