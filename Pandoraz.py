@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.2.5
+#                                                               v1.2.6
 
 import datetime
 import locale
@@ -18,7 +18,7 @@ import os
 
 
 
-Version = "v1.2.5"
+Version = "v1.2.6"
 
 
 
@@ -130,6 +130,7 @@ def HiddenCursor(imp="Hide"):
 
 Red = False
 Redes = []
+Pwd = []
 Tam = 0
 
 
@@ -264,7 +265,7 @@ def getNameRedes(Datos, Pos):
 
 def getPassRedes():
 	
-	global Redes
+	global Redes, Pwd
 	
 	Cont = 0
 	Cony = 0
@@ -280,7 +281,7 @@ def getPassRedes():
 		for X in Redes:
 			
 			Cont += 1
-						
+			
 			if Cont == 1:
 				
 				Cony += 1
@@ -296,11 +297,12 @@ def getPassRedes():
 			elif Cont == 4:
 				
 				Pass = getPass(Name, X)
-
+				Pwd.append(Pass)
+				
 				print("  {}".format(Pass))
 				
 				Cont = 0
-				
+			
 	else: print("\n\n\t [!] Sin Redes Disponibles... Por Ahora...")
 
 
@@ -325,7 +327,7 @@ def getPass(Nombre, MAC):
 
 def SavePass():
 	
-	global Redes
+	global Redes, Pwd
 	
 	Nombres = []
 	
@@ -333,7 +335,6 @@ def SavePass():
 	Eny = open("Pass.zion","r+")
 	
 	Lineas = Eny.readlines()
-	#~ print(Lineas)
 	
 	for x in Lineas:
 		
@@ -345,6 +346,7 @@ def SavePass():
 			Nombres.append(x)
 	
 	Cont = 0
+	Cony = 0
 	Nomb = ""
 	Cad1 = ""
 	Cad2 = ""
@@ -353,24 +355,27 @@ def SavePass():
 	for xD in Redes:
 		
 		Cont += 1
-				
+		
 		if Cont == 1:
 			
 			Nomb = xD
 			
-			Cad1 = "\n\t ====================================\n\t ESSID: " + Nomb
-		
+			Cad1 = "\n\t ====================================\n\t ESSID: " + Nomb +\
+				   "\n\t * PWD: " + Pwd[Cony]
+			
+			Cony += 1
+			
 		elif Cont == 3:
 			
 			x = "\n\t Canal: " + xD
-		
+			
 		elif Cont == 4:
 			
 			Cad2 = "\n\t BSSID: " + xD + x + "\n\t ===================================="
 			Cont = 0
-		
+			
 			if not Nomb in Nombres:
-								
+				
 				dt = datetime.datetime.now()
 				FH = dt.strftime("\n\n\t %A %d de %B del %Y - %H:%M").title()
 				
