@@ -9,14 +9,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.1.6
+#                                                               v1.1.8
 
 import time
 import os
 
 
 
-Version = "v1.1.6"
+Version = "v1.1.8"
 
 
 
@@ -212,6 +212,34 @@ def ObtenerRedes():
 	Datos["Senial"] = Senial
 	
 	return Datos
+
+
+
+def ImprimirListaWifi(Datos):
+	
+	global Redes, Red, Tam
+	
+	Red = False
+	Redes = []
+	Cont = 0
+	
+	print("\n\n\t      ESSID \t        Señal \t\t       BSSID",
+	"\n\n ============================================================================\n")
+	
+	for x in range(Tam):
+		
+		if len(Datos["ESSID"][Cont]) > 18:
+			print("    [*] {} - {}\n\t\t\t\t {}\t\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["BSSID"][Cont]))
+		elif len(Datos["ESSID"][Cont]) >= 11:
+			print("    [*] {} - {}\t {}\t\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["BSSID"][Cont]))
+		else:
+			print("    [*] {} - {}\t\t {}\t\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["BSSID"][Cont]))
+			
+		getNameRedes(Datos, Cont)
+		
+		Cont += 1
+	
+	print("\n ============================================================================")
 
 
 
