@@ -8,14 +8,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.1.0
+#                                                               v1.1.2
 
 import time
 import os
 
 
 
-Version = "v1.1.0"
+Version = "v1.1.2"
 
 
 
@@ -80,6 +80,31 @@ Conty = 0
 
 #=======================================================================
 
+
+
+def Plus():
+	
+	Conty = 0
+	xD = ""
+	
+	Comando = "netsh wlan show networks mode=Bssid"
+	Cad = os.popen(Comando)
+	Cadena = Cad.read()
+	Lista = Cadena.split("\n")
+	
+	for X in Lista:
+		
+		Conty += 1
+		
+		if Conty == 2:
+			xD += "\n\n\t [+] " + X + "\n\n\t [*] "
+		elif Conty == 3:
+			if X.startswith("La"):
+				xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
+					"     apagada y no es compatible con la operación solicitada."
+			else: xD += X
+			
+	return xD
 
 
 
