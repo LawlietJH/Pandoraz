@@ -9,14 +9,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.2.0
+#                                                               v1.2.1
 
 import time
 import os
 
 
 
-Version = "v1.2.0"
+Version = "v1.2.1"
 
 
 
@@ -227,7 +227,7 @@ def ImprimirListaWifi(Datos):
 		
 		if len(Datos["ESSID"][Cont]) > 18:
 			print("    [*] {} - {}\n\t\t\t\t {}\t\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["BSSID"][Cont]))
-		elif len(Datos["ESSID"][Cont]) >= 11:
+		elif len(Datos["ESSID"][Cont]) > 11:
 			print("    [*] {} - {}\t {}\t\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["BSSID"][Cont]))
 		else:
 			print("    [*] {} - {}\t\t {}\t\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["BSSID"][Cont]))
@@ -281,9 +281,7 @@ def getPassRedes():
 			if Cont == 1:
 				
 				Cony += 1
-				
 				Name = X
-				
 				print("\n [*] {} - {} ".format(Cony, X), end="\t")
 			
 			elif Cont == 2:
@@ -291,10 +289,8 @@ def getPassRedes():
 				
 			elif Cont == 3:
 				
-				Name = Name[-4:]
-				X = X.split(":")
-				Pass = X[3] + X[4] + Name
-				
+				Pass = getPass(Name, X)
+
 				print("  {}".format(Pass))
 				
 				Cont = 0
@@ -303,6 +299,24 @@ def getPassRedes():
 
 
 
+def getPass(Nombre, MAC):
+	
+	if "Totalplay" in Nombre:
+					
+		Nombre = Nombre[-4:]
+		MAC = MAC.split(":")
+		Pass = MAC[3] + MAC[4] + Nombre
+	
+	elif "Huawei" in Nombre:
+					
+		Nombre = Nombre[-4:]
+		MAC = MAC.split(":")
+		Pass = MAC[3] + MAC[4] + Nombre
+		
+	return Pass
+	
+	
+	
 #=======================================================================
 
 
