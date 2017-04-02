@@ -9,14 +9,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.1.4
+#                                                               v1.1.6
 
 import time
 import os
 
 
 
-Version = "v1.1.4"
+Version = "v1.1.6"
 
 
 
@@ -165,10 +165,57 @@ def Plus():
 
 
 
-def Redes():
+def ObtenerRedes():
 	
-	pass
+	global Tam
+	Tam = 0
+	
+	ESSID = []	# Nombre De La Red Wifi.
+	BSSID = []	# Dirección MAC De La Red Wifi.
+	Senial = []	# Porcentaje de Señal De La Red Wifi.
+	Datos = {}	# Diccionario Que Almacenará Las Listas.
+	
+	Comando = 'netsh wlan show all | findstr -i "ssid señal"'
+	Cadena = os.popen(Comando)
+	Cadena = Cadena.read()
+	Cadena = Cadena.split("REDES")[1]
+	Cadena = Cadena.split("\n")[1:]
+				
+	Cont = 0
+	Cony = 0
+	
+	Dato = Plus()
+	
+	os.system("cls && Title Pandoraz.py                "+\
+			"By: LawlietJH                "+Version+"    ")
+	print(Dato)
+	for x in Cadena:
+		
+		Cont += 1
+		
+		if "SSID" in x or "Se" in x:
+			
+			x = x.split(" : ")[1]
+						
+			if Cont == 1:
+				ESSID.append(x)
+				Tam += 1 
+			elif Cont == 2:
+				x = x.upper()
+				BSSID.append(x)
+			elif Cont == 3:
+				Senial.append(x)
+				Cont = 0
+	
+	Datos["ESSID"] = ESSID
+	Datos["BSSID"] = BSSID
+	Datos["Senial"] = Senial
+	
+	return Datos
 
+
+
+#=======================================================================
 
 
 
