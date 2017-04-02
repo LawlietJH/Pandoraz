@@ -9,14 +9,14 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.2.2
+#                                                               v1.2.3
 
 import time
 import os
 
 
 
-Version = "v1.2.2"
+Version = "v1.2.3"
 
 
 
@@ -247,6 +247,7 @@ def getNameRedes(Datos, Pos):
 			Red = True
 			Redes.append(Datos["ESSID"][Pos])
 			Redes.append(Datos["Senial"][Pos])
+			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
 	
 	elif "Huawei" in str(Datos["ESSID"][Pos]):
@@ -254,6 +255,7 @@ def getNameRedes(Datos, Pos):
 			Red = True
 			Redes.append(Datos["ESSID"][Pos])
 			Redes.append(Datos["Senial"][Pos])
+			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
 
 
@@ -271,7 +273,7 @@ def getPassRedes():
 	
 	if len(Redes) != 0:
 		
-		print("\n\n\t Red (ESSID) \t\tSeñal \t Contraseña")
+		print("\n\n\t Red (ESSID) \t\tSeñal    Canal \t Contraseña")
 		
 		for X in Redes:
 			
@@ -284,9 +286,12 @@ def getPassRedes():
 				print("\n [*] {} - {} ".format(Cony, X), end="\t")
 			
 			elif Cont == 2:
-				print(" {}".format(X), end="\t")
-				
+				print(" {}".format(X), end="    ")
+			
 			elif Cont == 3:
+				print(" {}".format(X), end="\t")
+			
+			elif Cont == 4:
 				
 				Pass = getPass(Name, X)
 
@@ -313,9 +318,15 @@ def getPass(Nombre, MAC):
 		Pass = MAC[3] + MAC[4] + Nombre
 		
 	return Pass
+
+
+
+def SavePass():
 	
-	
-	
+	pass
+
+
+
 #=======================================================================
 
 
