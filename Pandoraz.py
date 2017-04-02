@@ -9,14 +9,16 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.2.3
+#                                                               v1.2.5
 
+import datetime
+import locale
 import time
 import os
 
 
 
-Version = "v1.2.3"
+Version = "v1.2.5"
 
 
 
@@ -323,7 +325,56 @@ def getPass(Nombre, MAC):
 
 def SavePass():
 	
-	pass
+	global Redes
+	
+	Nombres = []
+	
+	open("Pass.zion","a")
+	Eny = open("Pass.zion","r+")
+	
+	Lineas = Eny.readlines()
+	#~ print(Lineas)
+	
+	for x in Lineas:
+		
+		x = x.split("\n")[0]
+		
+		if "ESSID: " in x:
+			
+			x = x.split(": ")[1]
+			Nombres.append(x)
+	
+	Cont = 0
+	Nomb = ""
+	Cad1 = ""
+	Cad2 = ""
+	x = ""
+	
+	for xD in Redes:
+		
+		Cont += 1
+				
+		if Cont == 1:
+			
+			Nomb = xD
+			
+			Cad1 = "\n\t ====================================\n\t ESSID: " + Nomb
+		
+		elif Cont == 3:
+			
+			x = "\n\t Canal: " + xD
+		
+		elif Cont == 4:
+			
+			Cad2 = "\n\t BSSID: " + xD + x + "\n\t ===================================="
+			Cont = 0
+		
+			if not Nomb in Nombres:
+								
+				dt = datetime.datetime.now()
+				FH = dt.strftime("\n\n\t %A %d de %B del %Y - %H:%M").title()
+				
+				Eny.write(FH+Cad1+Cad2)
 
 
 
@@ -333,6 +384,7 @@ def SavePass():
 
 def Main():
 	
+	locale.setlocale(locale.LC_ALL, "es-MX")
 	HiddenCursor()
 	
 	os.system("Title Pandoraz.py                "+\
@@ -343,10 +395,9 @@ def Main():
 	while True:
 		
 		Datos = ObtenerRedes()
-		#~ print(Datos)
-		#~ os.system("Pause")
 		ImprimirListaWifi(Datos)
 		getPassRedes()
+		SavePass()
 		
 		try:
 			os.system("TimeOut /NoBreak 1 > Nul")
