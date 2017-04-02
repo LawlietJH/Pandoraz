@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.2.6
+#                                                               v1.3.0
 
 import datetime
 import locale
@@ -18,7 +18,7 @@ import os
 
 
 
-Version = "v1.2.6"
+Version = "v1.3.0"
 
 
 
@@ -127,24 +127,73 @@ def HiddenCursor(imp="Hide"):
 #=======================================================================
 
 
-
+RxD = False
 Red = False
 Redes = []
 Pwd = []
+Resp = 0
 Tam = 0
 
 
 
 #=======================================================================
+
+
+
+def Chk_WiFi(Cadena, Eny):
+	
+	global RxD, Resp
+	
+	while True:
+		
+		if RxD == False:
 			
+			RxD = True
+	
+			Cont = 1
+			
+			os.system("cls")
+		
+			print("\n\n\t [+] Lista De Interfacez De Red Disponibles:")
+			print("\n\n\t [*] 1 - Wi-Fi")
+				
+			for x in range(Eny):
+							
+				if ("Wi-Fi " + str(x+1)) in Cadena:
+					
+					Cont += 1
+					print("\n\t [*] " + str(Cont) + " - Wi-Fi " + str(x+1))
+						
+			try: 
+				Resp = input("\n\n\t\t [+] Selecciona Una Interfaz: ")
+				
+				if Resp == "": print("\n\n\t [!] Elige Una Opción!"), time.sleep(1)
+				elif int(Resp) > Cont: print("\n\n\t Opción Inexistente!"), time.sleep(1)
+				else:
+					Resp = int(Resp)
+					break
+				
+			except KeyboardInterrupt: Salir(0)
+			except ValueError: print("\n\n\t [!] Caracteres No Validos!"), time.sleep(1)
+					
+			except Exception as ex: print(type(ex).__name__), time.sleep(1)
+		
+		else: break
+		
+	xD = Cadena.split("Nombre de interfaz : ")[1:]
+	
+	Cadena = xD[Resp-1]
+	
+	return Cadena
 
 
 def ObtenerRedes():
 	
-	global Tam
+	global Tam, RxD
+	Bool = False
 	Tam = 0
 	xD = ""
-	
+	Resp = ""
 	Cont = 0
 	Cony = 0
 	Conty = 0
@@ -158,19 +207,41 @@ def ObtenerRedes():
 	Comando = "netsh wlan show networks mode=Bssid"
 	Cadena = os.popen(Comando)
 	Cadena = Cadena.read()
+	Eny = Cadena.count("Wi-Fi")		# Se Obtiene El Número De Tarjetas Wi-Fi Disponibles.
+	
+	if Eny > 1:
+		
+		Bool = True
+		Cadena = Chk_WiFi(Cadena, Eny)
+		
 	Cadena = Cadena.split("\n")
 	
-	for X in Cadena:
+	if Bool == False:
 		
-		Conty += 1
+		for X in Cadena:
+			
+			Conty += 1
+			
+			if Conty == 2:
+				xD += "\n\n\t [+] " + X + "\n\n\t [*] "
+			elif Conty == 3:
+				if X.startswith("La"):
+					xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
+						"     apagada y no es compatible con la operación solicitada."
+				else: xD += X
+	else:
 		
-		if Conty == 2:
-			xD += "\n\n\t [+] " + X + "\n\n\t [*] "
-		elif Conty == 3:
-			if X.startswith("La"):
-				xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
-					"     apagada y no es compatible con la operación solicitada."
-			else: xD += X
+		for X in Cadena:
+			
+			Conty += 1
+			
+			if Conty == 1:
+				xD += "\n\n\t [+] Nombre de interfaz : " + X + "\n\n\t [*] "
+			elif Conty == 2:
+				if X.startswith("La"):
+					xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
+						"     apagada y no es compatible con la operación solicitada."
+				else: xD += X
 	
 	os.system("cls && Title Pandoraz.py                "+\
 			"By: LawlietJH                "+Version+"    ")
@@ -222,24 +293,39 @@ def ImprimirListaWifi(Datos):
 	Redes = []
 	Cont = 0
 	
-	print("\n\n\t      ESSID \t        Señal   Canal \t       BSSID",
-	"\n\n ============================================================================\n")
-	
-	for x in range(Tam):
+	try:
 		
-		if len(Datos["ESSID"][Cont]) > 18:
-			print("    [*] {} - {}\n\t\t\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
-		elif len(Datos["ESSID"][Cont]) > 11:
-			print("    [*] {} - {}\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
-		else:
-			print("    [*] {} - {}\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
+		print("\n\n\t      ESSID \t        Señal   Canal \t       BSSID",
+		"\n =============================================================================\n")
+		
+		for x in range(Tam):
 			
-		getNameRedes(Datos, Cont)
-		
-		Cont += 1
+			if x < 9:				
+				if len(Datos["ESSID"][Cont]) > 18:
+					print("    [*] 0{} - {}\n\t\t\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
+				elif len(Datos["ESSID"][Cont]) >= 11:
+					print("    [*] 0{} - {}\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
+				else:
+					print("    [*] 0{} - {}\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
+			else:
+				if len(Datos["ESSID"][Cont]) > 18:
+					print("    [*] {} - {}\n\t\t\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
+				elif len(Datos["ESSID"][Cont]) >= 11:
+					print("    [*] {} - {}\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
+				else:
+					print("    [*] {} - {}\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
+				
+			getNameRedes(Datos, Cont)
+			
+			Cont += 1
 	
-	print("\n ============================================================================")
-
+		print("\n =============================================================================")
+	
+	except IndexError:
+		
+		print("\t\t Surgió Un Error! Restaurando!...")
+		print("\n =============================================================================")
+		time.sleep(3)
 
 
 def getNameRedes(Datos, Pos):
@@ -272,11 +358,11 @@ def getPassRedes():
 	Name = ""
 	Pass = ""
 	
-	print("\n\n\n\n [+] Contraseñas Posibles De Redes Conseguidas:")
+	print("\n [+] Contraseñas Posibles De Redes Conseguidas:")
 	
 	if len(Redes) != 0:
 		
-		print("\n\n\t Red (ESSID) \t\tSeñal    Canal \t Contraseña")
+		print("\n\t   Red (ESSID) \t\tSeñal    Canal \t Contraseña\n")
 		
 		for X in Redes:
 			
@@ -286,7 +372,7 @@ def getPassRedes():
 				
 				Cony += 1
 				Name = X
-				print("\n [*] {} - {} ".format(Cony, X), end="\t")
+				print(" [*] {} - {} ".format(Cony, X), end="\t")
 			
 			elif Cont == 2:
 				print(" {}".format(X), end="    ")
@@ -406,11 +492,14 @@ def Main():
 		
 		try:
 			os.system("TimeOut /NoBreak 1 > Nul")
+		except IndexError: os.system("TimeOut /NoBreak 1 > Nul")
 		except KeyboardInterrupt:
 			print("\n\n\t [!] Saliendo...")
 			time.sleep(1.5)
 			Dat()
 			Salir(0)
+		except:
+			time.sleep(1.5)
 			
 
 
