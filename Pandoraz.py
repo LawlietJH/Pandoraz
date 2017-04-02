@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.3.0
+#                                                               v1.3.2
 
 import datetime
 import locale
@@ -18,7 +18,7 @@ import os
 
 
 
-Version = "v1.3.0"
+Version = "v1.3.2"
 
 
 
@@ -130,7 +130,7 @@ def HiddenCursor(imp="Hide"):
 RxD = False
 Red = False
 Redes = []
-Pwd = []
+Pwd = {}
 Resp = 0
 Tam = 0
 
@@ -300,20 +300,20 @@ def ImprimirListaWifi(Datos):
 		
 		for x in range(Tam):
 			
-			if x < 9:				
+			if x < 9:
 				if len(Datos["ESSID"][Cont]) > 18:
 					print("    [*] 0{} - {}\n\t\t\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
-				elif len(Datos["ESSID"][Cont]) >= 11:
-					print("    [*] 0{} - {}\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
-				else:
+				elif len(Datos["ESSID"][Cont]) <= 10:
 					print("    [*] 0{} - {}\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
+				else:
+					print("    [*] 0{} - {}\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
 			else:
 				if len(Datos["ESSID"][Cont]) > 18:
 					print("    [*] {} - {}\n\t\t\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
-				elif len(Datos["ESSID"][Cont]) >= 11:
-					print("    [*] {} - {}\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
-				else:
+				elif len(Datos["ESSID"][Cont]) <= 10:
 					print("    [*] {} - {}\t\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
+				else:
+					print("    [*] {} - {}\t {}\t  {}\t {}".format(x+1, Datos["ESSID"][Cont], Datos["Senial"][Cont], Datos["Canal"][Cont], Datos["BSSID"][Cont]))
 				
 			getNameRedes(Datos, Cont)
 			
@@ -362,7 +362,7 @@ def getPassRedes():
 	
 	if len(Redes) != 0:
 		
-		print("\n\t   Red (ESSID) \t\tSeñal    Canal \t Contraseña\n")
+		print("\n\t   Red (ESSID) \t\tSeñal   Canal  Contraseña    MAC (BSSID)\n")
 		
 		for X in Redes:
 			
@@ -372,20 +372,23 @@ def getPassRedes():
 				
 				Cony += 1
 				Name = X
-				print(" [*] {} - {} ".format(Cony, X), end="\t")
+				
+				if len(X) < 15: print(" [*] {} - {}".format(Cony, X), end="\t\t")
+				elif len(X) >= 15 and len(X) < 22: print(" [*] {} - {}".format(Cony, X), end="\t")
+				elif len(X) >= 22: print(" [*] {} - {}".format(Cony, X), end=" ")
 			
 			elif Cont == 2:
 				print(" {}".format(X), end="    ")
 			
 			elif Cont == 3:
-				print(" {}".format(X), end="\t")
+				print("{}".format(X), end="    ")
 			
 			elif Cont == 4:
 				
 				Pass = getPass(Name, X)
-				Pwd.append(Pass)
+				Pwd[Name] = Pass
 				
-				print("  {}".format(Pass))
+				print("{}    {}".format(Pass, X))
 				
 				Cont = 0
 			
@@ -447,7 +450,7 @@ def SavePass():
 			Nomb = xD
 			
 			Cad1 = "\n\t ====================================\n\t ESSID: " + Nomb +\
-				   "\n\t * PWD: " + Pwd[Cony]
+				   "\n\t * PWD: " + Pwd[Nomb]
 			
 			Cony += 1
 			
@@ -463,7 +466,7 @@ def SavePass():
 			if not Nomb in Nombres:
 				
 				dt = datetime.datetime.now()
-				FH = dt.strftime("\n\n\t %A %d de %B del %Y - %H:%M").title()
+				FH = dt.strftime("\n\n\n\t %A %d de %B del %Y - %H:%M").title()
 				
 				Eny.write(FH+Cad1+Cad2)
 
