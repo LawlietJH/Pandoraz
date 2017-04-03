@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.3.2
+#                                                               v1.3.3
 
 import datetime
 import locale
@@ -18,7 +18,7 @@ import os
 
 
 
-Version = "v1.3.2"
+Version = "v1.3.3"
 
 
 
@@ -127,9 +127,12 @@ def HiddenCursor(imp="Hide"):
 #=======================================================================
 
 
+
+Inter = "Wi-Fi"
 RxD = False
 Red = False
 Redes = []
+Interfaces = {}
 Pwd = {}
 Resp = 0
 Tam = 0
@@ -142,7 +145,7 @@ Tam = 0
 
 def Chk_WiFi(Cadena, Eny):
 	
-	global RxD, Resp
+	global RxD, Resp, Inter
 	
 	while True:
 		
@@ -163,13 +166,16 @@ def Chk_WiFi(Cadena, Eny):
 					
 					Cont += 1
 					print("\n\t [*] " + str(Cont) + " - Wi-Fi " + str(x+1))
-						
+					
 			try: 
 				Resp = input("\n\n\t\t [+] Selecciona Una Interfaz: ")
-				
+						
 				if Resp == "": print("\n\n\t [!] Elige Una Opción!"), time.sleep(1)
 				elif int(Resp) > Cont: print("\n\n\t Opción Inexistente!"), time.sleep(1)
 				else:
+					
+					if int(Resp) > 1: Inter += " " + Resp
+						
 					Resp = int(Resp)
 					break
 				
@@ -179,10 +185,15 @@ def Chk_WiFi(Cadena, Eny):
 			except Exception as ex: print(type(ex).__name__), time.sleep(1)
 		
 		else: break
-		
-	xD = Cadena.split("Nombre de interfaz : ")[1:]
 	
-	Cadena = xD[Resp-1]
+	xD = Cadena.split("Nombre de interfaz : ")[1:]
+				
+	for x in xD:
+		
+		NomInt = x.split("\n")[0].strip()
+		Interfaces[NomInt] = x
+			
+	Cadena = Interfaces[Inter]
 	
 	return Cadena
 
