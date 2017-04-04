@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.3.3
+#                                                               v1.3.5
 
 import datetime
 import locale
@@ -18,7 +18,7 @@ import os
 
 
 
-Version = "v1.3.3"
+Version = "v1.3.5"
 
 
 
@@ -65,8 +65,10 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 	print("\n\n", Autor)
 	print("\n{:^80}".format(Version))
 	
-	os.system("TimeOut /NoBreak 1 > Nul")
-	
+	try:
+		os.system("TimeOut /NoBreak 2 > Nul")
+	except:
+		Dat()
 
 
 def Salir(Num=0):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
@@ -129,6 +131,7 @@ def HiddenCursor(imp="Hide"):
 
 
 Inter = "Wi-Fi"
+Exist = False
 RxD = False
 Red = False
 Redes = []
@@ -179,7 +182,7 @@ def Chk_WiFi(Cadena, Eny):
 					Resp = int(Resp)
 					break
 				
-			except KeyboardInterrupt: Salir(0)
+			except KeyboardInterrupt: Dat(), Salir(0)
 			except ValueError: print("\n\n\t [!] Caracteres No Validos!"), time.sleep(1)
 					
 			except Exception as ex: print(type(ex).__name__), time.sleep(1)
@@ -218,7 +221,22 @@ def ObtenerRedes():
 	Comando = "netsh wlan show networks mode=Bssid"
 	Cadena = os.popen(Comando)
 	Cadena = Cadena.read()
+	
+	NoInterfaces = "El Servicio de"
+	if NoInterfaces in Cadena:
+		
+		try:
+			print("\n\n\n\t [!] No hay Interfaces de Red wi-Fi Disponibles!\n\n")
+			print("\n\n\t [!] Saliendo...")
+			time.sleep(3)
+			Dat()
+			Salir(0)
+		except KeyboardInterrupt:
+			Dat()
+			Salir(0)
+	
 	Eny = Cadena.count("Wi-Fi")		# Se Obtiene El Número De Tarjetas Wi-Fi Disponibles.
+	if Eny == 0: Eny = Cadena.count("Conexi")
 	
 	if Eny > 1:
 		
@@ -234,7 +252,10 @@ def ObtenerRedes():
 			Conty += 1
 			
 			if Conty == 2:
-				xD += "\n\n\t [+] " + X + "\n\n\t [*] "
+				if "Conexi" in X:
+					xD += "\n\n\t [+] Nombre de interfaz : Conexión de red inalámbrica\n\n\t [*] "
+				else:
+					xD += "\n\n\t [+] " + X + "\n\n\t [*] "
 			elif Conty == 3:
 				if X.startswith("La"):
 					xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
@@ -247,7 +268,10 @@ def ObtenerRedes():
 			Conty += 1
 			
 			if Conty == 1:
-				xD += "\n\n\t [+] Nombre de interfaz : " + X + "\n\n\t [*] "
+				if X.startswith("Conexi"):
+					xD += "\n\n\t [+] Nombre de interfaz : Conexión de red inalámbrica\n\n\t [*] "
+				else:
+					xD += "\n\n\t [+] Nombre de interfaz : " + X + "\n\n\t [*] "
 			elif Conty == 2:
 				if X.startswith("La"):
 					xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
@@ -306,7 +330,7 @@ def ImprimirListaWifi(Datos):
 	
 	try:
 		
-		print("\n\n\t      ESSID \t        Señal   Canal \t       BSSID",
+		print("\n\n\t     ESSID \t        Señal   Canal \t       BSSID",
 		"\n =============================================================================\n")
 		
 		for x in range(Tam):
@@ -373,7 +397,7 @@ def getPassRedes():
 	
 	if len(Redes) != 0:
 		
-		print("\n\t   Red (ESSID) \t\tSeñal   Canal  Contraseña    MAC (BSSID)\n")
+		print("\n\t   Red (ESSID) \t\tSeñal   Canal   Key WPA        MAC (BSSID)\n")
 		
 		for X in Redes:
 			
@@ -427,12 +451,16 @@ def getPass(Nombre, MAC):
 
 def SavePass():
 	
-	global Redes, Pwd
+	global Redes, Pwd, Exist
 	
 	Nombres = []
 	
 	open("Pass.zion","a")
 	Eny = open("Pass.zion","r+")
+	
+	if not Exist:
+		Eny.write("\n [+] Por: LawlietJH - Pandoraz "+Version+"\n\n")
+		Exist = True
 	
 	Lineas = Eny.readlines()
 	
@@ -460,18 +488,18 @@ def SavePass():
 			
 			Nomb = xD
 			
-			Cad1 = "\n\t ====================================\n\t ESSID: " + Nomb +\
-				   "\n\t * PWD: " + Pwd[Nomb]
+			Cad1 = "\n\t ====================================\n\t   ESSID: " + Nomb +\
+				   "\n\t*Key WPA: " + Pwd[Nomb]
 			
 			Cony += 1
 			
 		elif Cont == 3:
 			
-			x = "\n\t Canal: " + xD
+			x = "\n\t   Canal: " + xD
 			
 		elif Cont == 4:
 			
-			Cad2 = "\n\t BSSID: " + xD + x + "\n\t ===================================="
+			Cad2 = "\n\t   BSSID: " + xD + x + "\n\t ===================================="
 			Cont = 0
 			
 			if not Nomb in Nombres:
@@ -489,31 +517,36 @@ def SavePass():
 
 def Main():
 	
-	locale.setlocale(locale.LC_ALL, "es-MX")
-	HiddenCursor()
+	try:
+		locale.setlocale(locale.LC_ALL, "es-MX")
+		HiddenCursor()
 	
-	os.system("Title Pandoraz.py                "+\
-			"By: LawlietJH                "+Version+"    ")
+		os.system("Title Pandoraz.py                "+\
+				"By: LawlietJH                "+Version+"    ")
 	
-	print("\n\n\t\t [!] Escaneando La Red Wifi!")
+		print("\n\n\t\t [!] Escaneando La Red Wifi!")
 	
-	while True:
+	
+		while True:
 		
-		Datos = ObtenerRedes()
-		ImprimirListaWifi(Datos)
-		getPassRedes()
-		SavePass()
-		
-		try:
+			Datos = ObtenerRedes()
+			ImprimirListaWifi(Datos)
+			getPassRedes()
+			SavePass()
 			os.system("TimeOut /NoBreak 1 > Nul")
-		except IndexError: os.system("TimeOut /NoBreak 1 > Nul")
-		except KeyboardInterrupt:
-			print("\n\n\t [!] Saliendo...")
+			
+	except IndexError: os.system("TimeOut /NoBreak 1 > Nul")
+	except KeyboardInterrupt:
+		print("\n\n\t [!] Saliendo...")
+		try:
 			time.sleep(1.5)
-			Dat()
-			Salir(0)
-		except:
+		except KeyboardInterrupt: pass
+		Dat()
+		Salir(0)
+	except:
+		try:
 			time.sleep(1.5)
+		except KeyboardInterrupt: pass
 			
 
 
