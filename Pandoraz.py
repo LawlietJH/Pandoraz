@@ -161,15 +161,29 @@ def Chk_WiFi(Cadena, Eny):
 			os.system("cls")
 		
 			print("\n\n\t [+] Lista De Interfacez De Red Disponibles:")
-			print("\n\n\t [*] 1 - Wi-Fi")
-				
-			for x in range(Eny):
-							
-				if ("Wi-Fi " + str(x+1)) in Cadena:
+			
+			if "Wi-Fi" in Cadena:
+			
+				print("\n\n\t [*] 1 - Wi-Fi")
 					
-					Cont += 1
-					print("\n\t [*] " + str(Cont) + " - Wi-Fi " + str(x+1))
+				for x in range(Eny):
+								
+					if ("Wi-Fi " + str(x+1)) in Cadena:
+						
+						Cont += 1
+						print("\n\t [*] " + str(Cont) + " - Wi-Fi " + str(x+1))
+			
+			elif "Conexi" in Cadena:
+			
+				print("\n\n\t [*] 1 - Conexión de red inalámbrica")
 					
+				for x in range(Eny):
+								
+					if ("Wi-Fi " + str(x+1)) in Cadena:
+						
+						Cont += 1
+						print("\n\t [*] " + str(Cont) + " - Conexión de red inalámbrica " + str(x+1))
+			
 			try: 
 				Resp = input("\n\n\t\t [+] Selecciona Una Interfaz: ")
 						
@@ -199,6 +213,7 @@ def Chk_WiFi(Cadena, Eny):
 	Cadena = Interfaces[Inter]
 	
 	return Cadena
+
 
 
 def ObtenerRedes():
