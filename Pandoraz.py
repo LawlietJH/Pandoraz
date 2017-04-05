@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.3.6
+#                                                               v1.3.7
 
 import datetime
 import locale
@@ -18,7 +18,7 @@ import os
 
 
 
-Version = "v1.3.6"
+Version = "v1.3.7"
 
 
 
@@ -382,7 +382,13 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
 
-
+	elif "DG860" in str(Datos["ESSID"][Pos]) or "TG862" in str(Datos["ESSID"][Pos]):	# Para Arris DG860/TG862
+			
+			Red = True
+			Redes.append(Datos["ESSID"][Pos])
+			Redes.append(Datos["Senial"][Pos])
+			Redes.append(Datos["Canal"][Pos])
+			Redes.append(Datos["BSSID"][Pos])
 
 def getPassRedes():
 	
@@ -397,7 +403,7 @@ def getPassRedes():
 	
 	if len(Redes) != 0:
 		
-		print("\n\t  Red (ESSID) \t\tSeñal   Canal   *WPA Key       MAC (BSSID)\n")
+		print("\n\t  Red (ESSID) \t   | Señal | Canal |   MAC (BSSID)   |  *WPA Key\n")
 		
 		for X in Redes:
 			
@@ -408,25 +414,25 @@ def getPassRedes():
 				Cony += 1
 				Name = X
 				
-				if len(X) < 15: print(" [*] {} - {}".format(Cony, X), end="\t\t")
-				elif len(X) >= 15 and len(X) < 22: print(" [*] {} - {}".format(Cony, X), end="\t")
-				elif len(X) >= 22: print(" [*] {} - {}".format(Cony, X), end=" ")
+				if len(X) < 15: print(" [*] {} - {}".format(Cony, X), end="\t      ")
+				elif len(X) >= 15 and len(X) < 22: print(" [*] {} - {}".format(Cony, X), end="  ")
+				elif len(X) >= 22: print(" [*] {} - {}".format(Cony, X), end="  ")
 			
 			elif Cont == 2:
 				X = X.strip()
-				if len(X) == 4: print("{}".format(X), end="      ")
-				elif len(X) == 3: print(" {}".format(X), end="      ")
-				elif len(X) == 2: print("  {}".format(X), end="      ")
+				if len(X) == 4: print("{}".format(X), end="     ")
+				elif len(X) == 3: print(" {}".format(X), end="     ")
+				elif len(X) == 2: print("  {}".format(X), end="     ")
 			
 			elif Cont == 3:
-				print("{}".format(X), end="    ")
+				print("{}".format(X), end="   ")
 			
 			elif Cont == 4:
 				
 				Pass = getPass(Name, X)
 				Pwd[Name] = Pass
 				
-				print("{}    {}".format(Pass, X))
+				print("{}   {}".format(X, Pass))
 				
 				Cont = 0
 			
@@ -435,6 +441,8 @@ def getPassRedes():
 
 
 def getPass(Nombre, MAC):
+	
+	Nomb1, Nomb2 = "", ""
 	
 	if "Totalplay" in Nombre:
 					
@@ -447,6 +455,13 @@ def getPass(Nombre, MAC):
 		Nombre = Nombre[-4:]
 		MAC = MAC.split(":")
 		Pass = MAC[3] + MAC[4] + Nombre
+		
+	elif "DG860" in Nombre or "TG862" in Nombre:	# Para Arris DG860/TG862
+		
+		Nombre1 = Nombre[:-2]
+		Nombre2 = Nombre[-2:]
+		MAC = MAC.split(":")
+		Pass = Nombre1 + MAC[3] + MAC[4] + Nombre2
 		
 	return Pass
 
