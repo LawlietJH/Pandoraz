@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.3.5
+#                                                               v1.3.6
 
 import datetime
 import locale
@@ -18,7 +18,7 @@ import os
 
 
 
-Version = "v1.3.5"
+Version = "v1.3.6"
 
 
 
@@ -69,6 +69,7 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 		os.system("TimeOut /NoBreak 2 > Nul")
 	except:
 		Dat()
+
 
 
 def Salir(Num=0):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
@@ -131,7 +132,6 @@ def HiddenCursor(imp="Hide"):
 
 
 Inter = "Wi-Fi"
-Exist = False
 RxD = False
 Red = False
 Redes = []
@@ -397,7 +397,7 @@ def getPassRedes():
 	
 	if len(Redes) != 0:
 		
-		print("\n\t   Red (ESSID) \t\tSeñal   Canal   Key WPA        MAC (BSSID)\n")
+		print("\n\t  Red (ESSID) \t\tSeñal   Canal   *WPA Key       MAC (BSSID)\n")
 		
 		for X in Redes:
 			
@@ -413,7 +413,10 @@ def getPassRedes():
 				elif len(X) >= 22: print(" [*] {} - {}".format(Cony, X), end=" ")
 			
 			elif Cont == 2:
-				print(" {}".format(X), end="    ")
+				X = X.strip()
+				if len(X) == 4: print("{}".format(X), end="      ")
+				elif len(X) == 3: print(" {}".format(X), end="      ")
+				elif len(X) == 2: print("  {}".format(X), end="      ")
 			
 			elif Cont == 3:
 				print("{}".format(X), end="    ")
@@ -451,18 +454,16 @@ def getPass(Nombre, MAC):
 
 def SavePass():
 	
-	global Redes, Pwd, Exist
+	global Redes, Pwd
 	
 	Nombres = []
 	
 	open("Pass.zion","a")
 	Eny = open("Pass.zion","r+")
 	
-	if not Exist:
-		Eny.write("\n [+] Por: LawlietJH - Pandoraz "+Version+"\n\n")
-		Exist = True
-	
 	Lineas = Eny.readlines()
+	
+	if Lineas == []: Eny.write("\n [+] Por: LawlietJH - Pandoraz "+Version+"\n")
 	
 	for x in Lineas:
 		
@@ -488,8 +489,8 @@ def SavePass():
 			
 			Nomb = xD
 			
-			Cad1 = "\n\t ====================================\n\t   ESSID: " + Nomb +\
-				   "\n\t*Key WPA: " + Pwd[Nomb]
+			Cad1 = "\n\t=======================================\n\t   ESSID: " + Nomb +\
+				   "\n\t*WPA Key: " + Pwd[Nomb]
 			
 			Cony += 1
 			
@@ -499,13 +500,13 @@ def SavePass():
 			
 		elif Cont == 4:
 			
-			Cad2 = "\n\t   BSSID: " + xD + x + "\n\t ===================================="
+			Cad2 = "\n\t   BSSID: " + xD + x + "\n\t======================================="
 			Cont = 0
 			
 			if not Nomb in Nombres:
 				
 				dt = datetime.datetime.now()
-				FH = dt.strftime("\n\n\n\t %A %d de %B del %Y - %H:%M").title()
+				FH = dt.strftime("\n\n\n\t%A %d de %B del %Y - %H:%M").title()
 				
 				Eny.write(FH+Cad1+Cad2)
 
@@ -525,28 +526,30 @@ def Main():
 				"By: LawlietJH                "+Version+"    ")
 	
 		print("\n\n\t\t [!] Escaneando La Red Wifi!")
+	except:
+		pass
 	
-	
-		while True:
+	while True:
 		
+		try:
 			Datos = ObtenerRedes()
 			ImprimirListaWifi(Datos)
 			getPassRedes()
 			SavePass()
 			os.system("TimeOut /NoBreak 1 > Nul")
 			
-	except IndexError: os.system("TimeOut /NoBreak 1 > Nul")
-	except KeyboardInterrupt:
-		print("\n\n\t [!] Saliendo...")
-		try:
-			time.sleep(1.5)
-		except KeyboardInterrupt: pass
-		Dat()
-		Salir(0)
-	except:
-		try:
-			time.sleep(1.5)
-		except KeyboardInterrupt: pass
+		except IndexError: os.system("TimeOut /NoBreak 1 > Nul")
+		except KeyboardInterrupt:
+			print("\n\n\t [!] Saliendo...")
+			try:
+				time.sleep(1.5)
+			except KeyboardInterrupt: pass
+			Dat()
+			Salir(0)
+		except:
+			try:
+				time.sleep(1.5)
+			except KeyboardInterrupt: pass
 			
 
 
