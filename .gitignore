@@ -2,6 +2,11 @@
 Thumbs.db
 ehthumbs.db
 
+*.zion
+*.txt
+*v1.*.py
+*.png
+
 # Folder config file
 Desktop.ini
 
