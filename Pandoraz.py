@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.4.1
+#                                                               v1.4.2
 
 import datetime
 import random
@@ -19,7 +19,7 @@ import os
 
 
 
-Version = "v1.4.1"
+Version = "v1.4.2"
 
 
 
@@ -178,9 +178,7 @@ def Chk_WiFi(Cadena):
 	while True:
 		
 		if RxD == False:
-			
-			RxD = True
-			
+						
 			os.system("cls")
 		
 			print("\n\n\t [+] Lista De Interfacez De Red Disponibles:")
@@ -213,15 +211,17 @@ def Chk_WiFi(Cadena):
 				Resp = input("\n\n\t\t [+] Selecciona Una Interfaz: ")
 						
 				if Resp == "": print("\n\n\t [!] Elige Una Opción!"), time.sleep(1)
-				#~ elif int(Resp) > Cont: print("\n\n\t Opción Inexistente!"), time.sleep(1)
 				else:
 					
 					if int(Resp) > 1: Inter += " " + Resp
 					
-					if (Inter + " " + Resp) in Cadena:
-					
+					if Inter in Cadena:
+												
 						Resp = int(Resp)
+						RxD = True
 						break
+						
+					else: print("\n\n\t [!] Opción Inexistente!"), time.sleep(1)
 				
 			except KeyboardInterrupt:
 				Dat()
@@ -650,14 +650,12 @@ def Atajos():
 				
 				dt2 = datetime.datetime.now()
 				dt2 = int(dt2.strftime("%S"))	# Se Obtienen los Segundos Actuales del Reloj.
-				
-				if Z > 6000: break		# Si Falla La Coincidencia De Tiempos, Esto Terminara el Ciclo en Aproximadamente un Segundo. 
-				elif Z == 6000:
+					
+				if Z >= 5000:		# Si Falla La Coincidencia De Tiempos, Esto Terminara el Ciclo en Aproximadamente un Segundo. 
 					
 					randy = random.choice(Lista)
 					print("\n\n\n\t\t [+] " + randy)
-					os.system("Title " + randy)
-					time.sleep(2)
+					time.sleep(1.5)
 					break
 				
 				elif dt2 == dt: break		# Si Ambos Tiempos Son Iguales, Significa Que Paso 1 Segundo y se Cierra El Ciclo.
