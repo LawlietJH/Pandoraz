@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.3.8
+#                                                               v1.3.9
 
 import datetime
 import locale
@@ -18,7 +18,7 @@ import os
 
 
 
-Version = "v1.3.8"
+Version = "v1.3.9"
 
 
 
@@ -69,6 +69,10 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 		os.system("TimeOut /NoBreak 2 > Nul")
 	except:
 		Dat()
+
+
+
+#=======================================================================
 
 
 
@@ -571,6 +575,22 @@ def SavePass():
 				FH = dt.strftime("\n\n\n\t%A %d de %B del %Y - %H:%M").title()
 				
 				Eny.write(FH+Cad1+Cad2)
+
+
+
+def Imp():	# Limpia El Buffer (Flush)
+    
+    try:
+        
+        import msvcrt
+        
+        while msvcrt.kbhit(): msvcrt.getch()
+            
+    except ImportError:
+		
+        import sys, termios
+        
+        termios.tcflush(sys.stdin, termios.TCIOFLUSH)
 
 
 
