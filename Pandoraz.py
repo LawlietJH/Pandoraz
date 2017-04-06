@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.3.7
+#                                                               v1.3.8
 
 import datetime
 import locale
@@ -18,7 +18,7 @@ import os
 
 
 
-Version = "v1.3.7"
+Version = "v1.3.8"
 
 
 
@@ -146,7 +146,7 @@ Tam = 0
 
 
 
-def Chk_WiFi(Cadena, Eny):
+def Chk_WiFi(Cadena):
 	
 	global RxD, Resp, Inter
 	
@@ -155,8 +155,6 @@ def Chk_WiFi(Cadena, Eny):
 		if RxD == False:
 			
 			RxD = True
-	
-			Cont = 1
 			
 			os.system("cls")
 		
@@ -170,9 +168,10 @@ def Chk_WiFi(Cadena, Eny):
 								
 					if ("Wi-Fi " + str(x+1)) in Cadena:
 						
-						Cont += 1
-						print("\n\t [*] " + str(x) + " - Wi-Fi " + str(x+1))
-			
+						print("\n\t [*] " + str(x+1) + " - Wi-Fi " + str(x+1))
+				
+				Inter = "Wi-Fi"
+				
 			elif "Conexi" in Cadena:
 			
 				print("\n\n\t [*] 1 - Conexión de red inalámbrica")
@@ -181,8 +180,7 @@ def Chk_WiFi(Cadena, Eny):
 								
 					if ("Conexi¢n de red inal mbrica " + str(x+1)) in Cadena:
 						
-						Cont += 1
-						print("\n\t [*] " + str(x) + " - Conexión de red inalámbrica " + str(x+1))
+						print("\n\t [*] " + str(x+1) + " - Conexión de red inalámbrica " + str(x+1))
 				
 				Inter = "Conexi¢n de red inal mbrica"
 				
@@ -190,13 +188,15 @@ def Chk_WiFi(Cadena, Eny):
 				Resp = input("\n\n\t\t [+] Selecciona Una Interfaz: ")
 						
 				if Resp == "": print("\n\n\t [!] Elige Una Opción!"), time.sleep(1)
-				elif int(Resp) > Cont: print("\n\n\t Opción Inexistente!"), time.sleep(1)
+				#~ elif int(Resp) > Cont: print("\n\n\t Opción Inexistente!"), time.sleep(1)
 				else:
 					
 					if int(Resp) > 1: Inter += " " + Resp
-						
-					Resp = int(Resp)
-					break
+					
+					if (Inter + " " + Resp) in Cadena:
+					
+						Resp = int(Resp)
+						break
 				
 			except KeyboardInterrupt: Dat(), Salir(0)
 			except ValueError: print("\n\n\t [!] Caracteres No Validos!"), time.sleep(1)
@@ -223,11 +223,9 @@ def ObtenerRedes():
 	global Tam, RxD
 	Bool = False
 	Tam = 0
-	xD = ""
 	Resp = ""
 	Cont = 0
 	Cony = 0
-	Conty = 0
 	
 	ESSID = []	# Nombre De La Red Wifi.
 	BSSID = []	# Dirección MAC De La Red Wifi.
@@ -240,6 +238,7 @@ def ObtenerRedes():
 	Cadena = Cadena.read()
 	
 	NoInterfaces = "El Servicio de"
+	
 	if NoInterfaces in Cadena:
 		
 		try:
@@ -253,67 +252,22 @@ def ObtenerRedes():
 			Salir(0)
 	
 	Eny = Cadena.count("Wi-Fi")		# Se Obtiene El Número De Tarjetas Wi-Fi Disponibles.
+	
 	if Eny == 0: Eny = Cadena.count("Conexi¢n de red inal mbrica")
 	
 	if Eny > 1:
 		
 		Bool = True
-		Cadena = Chk_WiFi(Cadena, Eny)
+		Cadena = Chk_WiFi(Cadena)
 		
 	Cadena = Cadena.split("\n")
 	
-	if Bool == False:
-		
-		for X in Cadena:
-			
-			Conty += 1
-			
-			if Conty == 1:
-				if X.startswith("No hay ninguna interfaz"):
-					xD += "\n\n\t [+] No hay ninguna interfaz inalámbrica en el sistema.\n\t"
-					Conty = 0
-				else:
-					xD += "\n\n\t [+] " + X + "\n\t"
-			
-			elif Conty == 2:
-				if "Conexi¢n de red inal mbrica" in X:
-					
-					X = X.replace("¢","ó")
-					X = X.replace(" ","á")
-					
-					xD += "\n\n\t [+] " + X + "\n\n\t [*] "
-				else:
-					xD += "\n\n\t [+] " + X + "\n\n\t [*] "
-			elif Conty == 3:
-				if X.startswith("La"):
-					xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
-						"     apagada y no es compatible con la operación solicitada."
-				else: xD += X
-	else:
-		
-		for X in Cadena:
-			
-			Conty += 1
-			
-			if Conty == 1:
-				if X.startswith("Conexi¢n de red inal mbrica"):
-					
-					X = X.replace("¢","ó")
-					X = X.replace(" ","á")
-					
-					xD += "\n\n\t [+] Nombre de interfaz : " + X + "\n\n\t [*] "
-				else:
-					xD += "\n\n\t [+] Nombre de interfaz : " + X + "\n\n\t [*] "
-			elif Conty == 2:
-				if X.startswith("La"):
-					xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
-						"     apagada y no es compatible con la operación solicitada."
-				else: xD += X
+	Info = Chk_Info(Cadena, Bool)
 	
 	os.system("cls && Title Pandoraz.py                "+\
 			"By: LawlietJH                "+Version+"    ")
 	
-	print(xD)
+	print(Info)
 	
 	for x in Cadena:
 		
@@ -352,9 +306,66 @@ def ObtenerRedes():
 
 
 
+def Chk_Info(Cadena, Bool):
+	
+	Conty = 0
+	xD = ""
+	
+	if Bool == False:
+		
+		for X in Cadena:
+			
+			Conty += 1
+			
+			if Conty == 1:
+				if X.startswith("No hay ninguna interfaz"):
+					xD += "\n\n\t [+] No hay ninguna interfaz inalámbrica en el sistema.\n\t"
+					Conty = 0
+				#~ else:
+					#~ xD += "\n\n\t [+] " + X + "\n\t"
+			
+			elif Conty == 2:
+				if "Conexi¢n de red inal mbrica" in X:
+					
+					X = X.replace("¢","ó")
+					X = X.replace(" ","á")
+					
+					xD += "\n\n\t [+] " + X + "\n\n\t [*] "
+				else:
+					xD += "\n\n\t [+] " + X + "\n\n\t [*] "
+			elif Conty == 3:
+				if X.startswith("La"):
+					xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
+						"     apagada y no es compatible con la operación solicitada."
+				else: xD += X
+	else:
+		
+		for X in Cadena:
+			
+			Conty += 1
+			
+			if Conty == 1:
+				if X.startswith("Conexi¢n de red inal mbrica"):
+					
+					X = X.replace("¢","ó")
+					X = X.replace(" ","á")
+					
+					xD += "\n\n\t [+] Nombre de interfaz : " + X + "\n\n\t [*] "
+				else:
+					xD += "\n\n\t [+] Nombre de interfaz : " + X + "\n\n\t [*] "
+			elif Conty == 2:
+				if X.startswith("La"):
+					xD += "La interfaz de la red de área local inalámbrica está\n\t"+\
+						"     apagada y no es compatible con la operación solicitada."
+				else: xD += X
+	
+	return xD
+
+
+
 def ImprimirListaWifi(Datos):
 	
-	global Redes, Red, Tam
+	global Redes, Red, Tam, RxD
 	
 	Red = False
 	Redes = []
@@ -393,6 +404,7 @@ def ImprimirListaWifi(Datos):
 		print("\t\t Surgió Un Error! Restaurando!...")
 		print("\n =============================================================================")
 		time.sleep(3)
+		RxD = False
 
 
 
