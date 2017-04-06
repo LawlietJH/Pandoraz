@@ -166,24 +166,26 @@ def Chk_WiFi(Cadena, Eny):
 			
 				print("\n\n\t [*] 1 - Wi-Fi")
 					
-				for x in range(Eny):
+				for x in range(12):
 								
 					if ("Wi-Fi " + str(x+1)) in Cadena:
 						
 						Cont += 1
-						print("\n\t [*] " + str(Cont) + " - Wi-Fi " + str(x+1))
+						print("\n\t [*] " + str(x) + " - Wi-Fi " + str(x+1))
 			
 			elif "Conexi" in Cadena:
 			
 				print("\n\n\t [*] 1 - Conexión de red inalámbrica")
-					
-				for x in range(Eny):
+				
+				for x in range(12):
 								
-					if ("Wi-Fi " + str(x+1)) in Cadena:
+					if ("Conexi¢n de red inal mbrica " + str(x+1)) in Cadena:
 						
 						Cont += 1
-						print("\n\t [*] " + str(Cont) + " - Conexión de red inalámbrica " + str(x+1))
-			
+						print("\n\t [*] " + str(x) + " - Conexión de red inalámbrica " + str(x+1))
+				
+				Inter = "Conexi¢n de red inal mbrica"
+				
 			try: 
 				Resp = input("\n\n\t\t [+] Selecciona Una Interfaz: ")
 						
@@ -209,7 +211,7 @@ def Chk_WiFi(Cadena, Eny):
 		
 		NomInt = x.split("\n")[0].strip()
 		Interfaces[NomInt] = x
-			
+		
 	Cadena = Interfaces[Inter]
 	
 	return Cadena
@@ -251,7 +253,7 @@ def ObtenerRedes():
 			Salir(0)
 	
 	Eny = Cadena.count("Wi-Fi")		# Se Obtiene El Número De Tarjetas Wi-Fi Disponibles.
-	if Eny == 0: Eny = Cadena.count("Conexi")
+	if Eny == 0: Eny = Cadena.count("Conexi¢n de red inal mbrica")
 	
 	if Eny > 1:
 		
@@ -266,9 +268,20 @@ def ObtenerRedes():
 			
 			Conty += 1
 			
-			if Conty == 2:
-				if "Conexi" in X:
-					xD += "\n\n\t [+] Nombre de interfaz : Conexión de red inalámbrica\n\n\t [*] "
+			if Conty == 1:
+				if X.startswith("No hay ninguna interfaz"):
+					xD += "\n\n\t [+] No hay ninguna interfaz inalámbrica en el sistema.\n\t"
+					Conty = 0
+				else:
+					xD += "\n\n\t [+] " + X + "\n\t"
+			
+			elif Conty == 2:
+				if "Conexi¢n de red inal mbrica" in X:
+					
+					X = X.replace("¢","ó")
+					X = X.replace(" ","á")
+					
+					xD += "\n\n\t [+] " + X + "\n\n\t [*] "
 				else:
 					xD += "\n\n\t [+] " + X + "\n\n\t [*] "
 			elif Conty == 3:
@@ -283,8 +296,12 @@ def ObtenerRedes():
 			Conty += 1
 			
 			if Conty == 1:
-				if X.startswith("Conexi"):
-					xD += "\n\n\t [+] Nombre de interfaz : Conexión de red inalámbrica\n\n\t [*] "
+				if X.startswith("Conexi¢n de red inal mbrica"):
+					
+					X = X.replace("¢","ó")
+					X = X.replace(" ","á")
+					
+					xD += "\n\n\t [+] Nombre de interfaz : " + X + "\n\n\t [*] "
 				else:
 					xD += "\n\n\t [+] Nombre de interfaz : " + X + "\n\n\t [*] "
 			elif Conty == 2:
@@ -378,6 +395,7 @@ def ImprimirListaWifi(Datos):
 		time.sleep(3)
 
 
+
 def getNameRedes(Datos, Pos):
 	
 	global Red, Redes
@@ -404,6 +422,8 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Senial"][Pos])
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
+
+
 
 def getPassRedes():
 	
