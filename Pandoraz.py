@@ -9,16 +9,17 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.4.0
+#                                                               v1.4.1
 
 import datetime
+import random
 import locale
 import time
 import os
 
 
 
-Version = "v1.4.0"
+Version = "v1.4.1"
 
 
 
@@ -162,6 +163,7 @@ Interfaces = {}
 Pwd = {}
 Resp = 0
 Tam = 0
+Eny = 0
 
 
 
@@ -221,7 +223,9 @@ def Chk_WiFi(Cadena):
 						Resp = int(Resp)
 						break
 				
-			except KeyboardInterrupt: Dat(), Salir(0)
+			except KeyboardInterrupt:
+				Dat()
+				Salir(0)
 			except ValueError: print("\n\n\t [!] Caracteres No Validos!"), time.sleep(1)
 					
 			except Exception as ex: print(type(ex).__name__), time.sleep(1)
@@ -243,7 +247,7 @@ def Chk_WiFi(Cadena):
 
 def ObtenerRedes():
 	
-	global Tam, RxD
+	global Tam, RxD, Eny
 	Bool = False
 	Tam = 0
 	Resp = ""
@@ -599,36 +603,71 @@ def SavePass():
 
 def Atajos():
 	
-	Z = ""
+	global RxD, Eny
+	
+	xDD = False
+	Lista = ["Ctrl+I - Información.","Ctrl+C - Volver/Salir."]
+	Z = 0		# Por si Falla la Comparación de Tiempos.
+	Cont = 0
 	
 	dt = datetime.datetime.now()
-	dt = int(dt.strftime("%S")) + 1			# Se obtiene el Segundo Actual del Reloj + 1 Segundo.
+	dt = int(dt.strftime("%S")) + 1			# Se Obtienen los Segundos Actuales del Reloj + 1 Segundo.
 	
 	while True:
 		
 		try:
 			Imp()	# Limpia El Buffer.
 			
-			if keyboard.is_pressed('Ctrl + I'):	# Si Se Preciona La Tecla I Se Obtiene Información.
+			if keyboard.is_pressed('Ctrl + I'):	# Si Se Preciona Las Teclas 'Ctrl+I' Se Obtiene Información.
 				
 				os.system("Title [+] Información! ")
-				
-				GetInfo()	# Muestra Información
-				
+				GetInfo()	# Muestra Información.
+				Imp()	# Limpia El Buffer.
 				break
-			
+				
+			elif keyboard.is_pressed('Ctrl + C'):	# Si Se Preciona Las Teclas 'Ctrl+C' Se Obtiene Información.
+				
+				if Cont == 0 and Eny > 1:
+					
+					print("\n\n\t [!] Volviendo...")
+					Cont += 1
+					RxD = False
+					break
+				
+				elif Cont == 0 and Eny <= 1:
+					
+					print("\n\n\t [!] Saliendo...")
+					Cont += 1
+					xDD = True
+					Salir(0)
+					break
+				
+				#~ elif Cont == 0 and Eny == 0: print("xD")
+				
 			else:
 				
-				Z += "0"
+				Z += 1	# Aumenta en 1 en cada Ciclo.
 				
 				dt2 = datetime.datetime.now()
-				dt2 = int(dt2.strftime("%S"))	# Se Obtiene el Segundo Actual del Reloj.
+				dt2 = int(dt2.strftime("%S"))	# Se Obtienen los Segundos Actuales del Reloj.
 				
-				if len(Z)> 4000: break
-				elif dt2 == dt: break # Si Ambos Tiempos Son Iguales, Significa Que Paso 1 Segundo y se Cierra El Ciclo.
+				if Z > 6000: break		# Si Falla La Coincidencia De Tiempos, Esto Terminara el Ciclo en Aproximadamente un Segundo. 
+				elif Z == 6000:
+					
+					randy = random.choice(Lista)
+					print("\n\n\n\t\t [+] " + randy)
+					os.system("Title " + randy)
+					time.sleep(2)
+					break
+				
+				elif dt2 == dt: break		# Si Ambos Tiempos Son Iguales, Significa Que Paso 1 Segundo y se Cierra El Ciclo.
 								
 		except:
-			pass
+			if xDD == True:
+				Dat()
+				Salir(0)
+			
+			
 
 
 
@@ -697,19 +736,20 @@ def Main():
 			getPassRedes()
 			SavePass()
 			Atajos()
+			Imp()	# Limpia El Buffer.
 			
 		except IndexError: os.system("TimeOut /NoBreak 1 > Nul")
-		except KeyboardInterrupt:
-			print("\n\n\t [!] Saliendo...")
-			try:
-				time.sleep(1.5)
-			except KeyboardInterrupt: pass
-			Dat()
-			Salir(0)
-		except:
-			try:
-				time.sleep(1.5)
-			except KeyboardInterrupt: pass
+		except KeyboardInterrupt: pass
+			#~ print("\n\n\t [!] Saliendo...")
+			#~ try:
+				#~ time.sleep(1.5)
+			#~ except KeyboardInterrupt: pass
+			#~ Dat()
+			#~ Salir(0)
+		#~ except:
+			#~ try:
+				#~ time.sleep(1.5)
+			#~ except KeyboardInterrupt: pass
 			
 
 
