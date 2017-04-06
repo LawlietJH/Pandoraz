@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.3.9
+#                                                               v1.4.0
 
 import datetime
 import locale
@@ -18,7 +18,7 @@ import os
 
 
 
-Version = "v1.3.9"
+Version = "v1.4.0"
 
 
 
@@ -69,6 +69,25 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 		os.system("TimeOut /NoBreak 2 > Nul")
 	except:
 		Dat()
+
+
+
+def Chk_Dep():
+	
+	try:
+		import keyboard
+		
+	except ModuleNotFoundError:
+		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
+		os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
+		
+	except Exception as ex:
+		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
+
+
+
+Chk_Dep()				#~ Se instala el módulo keyboard si esta no esta instalada.
+import keyboard 		#~ Se importa la módulo.
 
 
 
@@ -465,15 +484,15 @@ def getPassRedes():
 				Cony += 1
 				Name = X
 				
-				if len(X) < 15: print(" [*] {} - {}".format(Cony, X), end="\t      ")
+				if len(X) < 15: print(" [*] {} - {}".format(Cony, X), end="\t     ")
 				elif len(X) >= 15 and len(X) < 22: print(" [*] {} - {}".format(Cony, X), end="  ")
 				elif len(X) >= 22: print(" [*] {} - {}".format(Cony, X), end="  ")
 			
 			elif Cont == 2:
 				X = X.strip()
-				if len(X) == 4: print("{}".format(X), end="     ")
-				elif len(X) == 3: print(" {}".format(X), end="     ")
-				elif len(X) == 2: print("  {}".format(X), end="     ")
+				if len(X) == 4: print("{}".format(X), end="      ")
+				elif len(X) == 3: print(" {}".format(X), end="      ")
+				elif len(X) == 2: print("  {}".format(X), end="      ")
 			
 			elif Cont == 3:
 				print("{}".format(X), end="   ")
@@ -578,6 +597,65 @@ def SavePass():
 
 
 
+def Atajos():
+	
+	Z = ""
+	
+	dt = datetime.datetime.now()
+	dt = int(dt.strftime("%S")) + 1			# Se obtiene el Segundo Actual del Reloj + 1 Segundo.
+	
+	while True:
+		
+		try:
+			Imp()	# Limpia El Buffer.
+			
+			if keyboard.is_pressed('Ctrl + I'):	# Si Se Preciona La Tecla I Se Obtiene Información.
+				
+				os.system("Title [+] Información! ")
+				
+				GetInfo()	# Muestra Información
+				
+				break
+			
+			else:
+				
+				Z += "0"
+				
+				dt2 = datetime.datetime.now()
+				dt2 = int(dt2.strftime("%S"))	# Se Obtiene el Segundo Actual del Reloj.
+				
+				if len(Z)> 4000: break
+				elif dt2 == dt: break # Si Ambos Tiempos Son Iguales, Significa Que Paso 1 Segundo y se Cierra El Ciclo.
+								
+		except:
+			pass
+
+
+
+def GetInfo():
+	
+	try:
+		os.system("cls && Title Pandoraz.py                "+\
+				"By: LawlietJH                "+Version+"    ")
+		
+		print("\n\n\n\t xD Aún No Hay Información Por Mostrar.")
+		
+		#~ os.system("Pause>Nul")
+		time.sleep(1.5)
+		
+	except KeyboardInterrupt:
+		
+		print("\n\n\t [!] Saliendo...")
+		try:
+			time.sleep(1.5)
+		except KeyboardInterrupt: pass
+		Dat()
+		Salir(0)
+		
+	return
+
+
+
 def Imp():	# Limpia El Buffer (Flush)
     
     try:
@@ -618,7 +696,7 @@ def Main():
 			ImprimirListaWifi(Datos)
 			getPassRedes()
 			SavePass()
-			os.system("TimeOut /NoBreak 1 > Nul")
+			Atajos()
 			
 		except IndexError: os.system("TimeOut /NoBreak 1 > Nul")
 		except KeyboardInterrupt:
