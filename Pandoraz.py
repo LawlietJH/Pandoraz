@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.4.2
+#                                                               v1.4.3
 
 import datetime
 import random
@@ -19,7 +19,7 @@ import os
 
 
 
-Version = "v1.4.2"
+Version = "v1.4.3"
 
 
 
@@ -506,13 +506,15 @@ def getPassRedes():
 			
 			elif Cont == 2:
 				X = X.strip()
-				if len(X) == 4: print("{}".format(X), end="      ")
-				elif len(X) == 3: print(" {}".format(X), end="      ")
-				elif len(X) == 2: print("  {}".format(X), end="      ")
+				if len(X) == 4: print("{}".format(X), end="     ")
+				elif len(X) == 3: print(" {}".format(X), end="     ")
+				elif len(X) == 2: print("  {}".format(X), end="     ")
 			
 			elif Cont == 3:
-				print("{}".format(X), end="   ")
-			
+				X = X.strip()
+				if len(X) == 1: print(" {}".format(X), end="   ")
+				elif len(X) == 2: print("{}".format(X), end="   ")
+				else: print(" ")
 			elif Cont == 4:
 				
 				Pass = getPass(Name, X)
@@ -632,7 +634,7 @@ def Atajos():
 			
 			if keyboard.is_pressed('Ctrl + I'):	# Si Se Preciona Las Teclas 'Ctrl+I' Se Obtiene Información.
 				
-				os.system("Title [+] Información! ")
+				#~ os.system("Title [+] Información! ")
 				GetInfo()	# Muestra Información.
 				Imp()	# Limpia El Buffer.
 				break
@@ -684,21 +686,8 @@ def Atajos():
 def GetInfo():
 	
 	try:
-		os.system("cls && Title Pandoraz.py                "+\
-				"By: LawlietJH                "+Version+"    ")
 		
-		print("\n\n\n    [+] Información:", end="\n\n\n\n\t")
-		print("  [*] 'Ctrl+C':\t  Si Se Está En Un Escaneo, Se Podra Salir", end="\n\t\t\t")
-		print("  Precionando 'Ctrl+C'.",end="\n\n\t\t\t")
-		print("  Si Hay Más De Una Interfaz De Red Para Elegir,", end="\n\t\t\t")
-		print("  Volverá Al Menú De 'Selección De Interfaz'.", end="\n\t\t\t")
-		print("  Para Salir En Esta Ocasión Del Script,", end="\n\t\t\t")
-		print("  Vuelva A Precionar 'Ctrl+C' En El Menú.")
-		print("\n\n\n\t  [*] 'Ctrl+I':\t  Muestra Esta Información.")
-		
-		
-		os.system("Pause>Nul")
-		time.sleep(1.5)
+		Run("Info.py")
 		
 	except KeyboardInterrupt:
 		
@@ -726,6 +715,31 @@ def Imp():	# Limpia El Buffer (Flush)
         import sys, termios
         
         termios.tcflush(sys.stdin, termios.TCIOFLUSH)
+
+
+
+
+# Abre Una Nueva Ventana Para Ejecutar Otro Script.
+def Run(Programa=""):
+	
+	import traceback, types
+	
+	#~ os.system("pip install pypiwin32 > Nul")
+	
+	import win32api, win32con, win32event, win32process
+	from win32com.shell.shell import ShellExecuteEx
+	from win32com.shell import shellcon
+	
+	showCmd = win32con.SW_SHOWNORMAL
+	cmd = Programa
+	params = ''
+	cmdDir = ''
+	lpVerb = ''
+	
+	procHandle = win32api.ShellExecute(0, lpVerb, cmd, params, cmdDir, showCmd)
+	#~ procInfo = ShellExecuteEx(nShow=showCmd, fMask=shellcon.SEE_MASK_NOCLOSEPROCESS, lpVerb=lpVerb, lpFile=cmd, lpParameters=params)
+	
+	#~ http://pt.stackoverflow.com/questions/6929/como-rodar-um-subprocess-com-permiss%C3%A3o-de-administrador
 
 
 
