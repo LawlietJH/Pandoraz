@@ -87,8 +87,20 @@ def Chk_Dep():
 
 
 
-Chk_Dep()				#~ Se instala el módulo keyboard si esta no esta instalada.
-import keyboard 		#~ Se importa la módulo.
+Chk_Dep()				#~ Se instala el módulo keyboard si este no esta instalado.
+try:
+	import keyboard 	# Se Importa El Módulo.
+except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
+	print("\n\n   No se pudo instalar correctamente el Módulo 'keyboard'.")
+	print("\n   Revise Su Conexión o Instale El Módulo Manualmente Desde Consola Con:")
+	print("\n\t 'pip install keyboard'   o   ' pip3 install keyboard'")
+	
+	try:
+		os.system("Pause > Nul")
+	except KeyboardInterrupt: pass
+	
+	Dat()
+	Salir(0)
 
 
 
