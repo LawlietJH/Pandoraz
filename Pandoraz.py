@@ -506,14 +506,14 @@ def getPassRedes():
 			
 			elif Cont == 2:
 				X = X.strip()
-				if len(X) == 4: print("{}".format(X), end="     ")
-				elif len(X) == 3: print(" {}".format(X), end="     ")
-				elif len(X) == 2: print("  {}".format(X), end="     ")
+				if len(X) == 4: print("{}".format(X), end="    ")
+				elif len(X) == 3: print(" {}".format(X), end="    ")
+				elif len(X) == 2: print("  {}".format(X), end="    ")
 			
 			elif Cont == 3:
 				X = X.strip()
-				if len(X) == 1: print(" {}".format(X), end="   ")
-				elif len(X) == 2: print("{}".format(X), end="   ")
+				if len(X) == 1: print("  {}".format(X), end="    ")
+				elif len(X) == 2: print(" {}".format(X), end="    ")
 				else: print(" ")
 			elif Cont == 4:
 				
@@ -678,8 +678,6 @@ def Atajos():
 			if xDD == True:
 				Dat()
 				Salir(0)
-			
-			
 
 
 
