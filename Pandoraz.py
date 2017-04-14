@@ -561,8 +561,8 @@ def SavePass():
 	
 	Nombres = []
 	
-	open("Pass.zion","a")
-	Eny = open("Pass.zion","r+")
+	open("Pass.ZioN","a")
+	Eny = open("Pass.ZioN","r+")
 	
 	Lineas = Eny.readlines()
 	
