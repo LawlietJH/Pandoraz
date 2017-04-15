@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.4.3
+#                                                               v1.4.4
 
 import datetime
 import random
@@ -19,7 +19,7 @@ import os
 
 
 
-Version = "v1.4.3"
+Version = "v1.4.4"
 
 
 
@@ -473,8 +473,14 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Senial"][Pos])
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
-
-
+	
+	elif len(Datos["ESSID"][Pos]) == 6:		# Para Cisco
+			
+			Red = True
+			Redes.append(Datos["ESSID"][Pos])
+			Redes.append(Datos["Senial"][Pos])
+			Redes.append(Datos["Canal"][Pos])
+			Redes.append(Datos["BSSID"][Pos])
 
 def getPassRedes():
 	
@@ -531,12 +537,19 @@ def getPassRedes():
 def getPass(Nombre, MAC):
 	
 	Nomb1, Nomb2 = "", ""
+	Pass = ""
 	
 	if "Totalplay" in Nombre:
-					
-		Nombre = Nombre[-4:]
-		MAC = MAC.split(":")
-		Pass = MAC[3] + MAC[4] + Nombre
+		
+		xD = Nombre.split("-")
+		
+		if len(xD[1]) == 4:
+			
+			Nombre = Nombre[-4:]
+			MAC = MAC.split(":")
+			Pass = MAC[3] + MAC[4] + Nombre
+			
+		else: Pass = "UKNOWN"
 	
 	elif "Huawei" in Nombre:
 					
@@ -550,6 +563,10 @@ def getPass(Nombre, MAC):
 		Nombre2 = Nombre[-2:]
 		MAC = MAC.split(":")
 		Pass = Nombre1 + MAC[3] + MAC[4] + Nombre2
+	
+	elif len(Nombre) == 6:
+		
+		Pass = "27???????"
 		
 	return Pass
 
@@ -561,8 +578,8 @@ def SavePass():
 	
 	Nombres = []
 	
-	open("Pass.ZioN","a")
-	Eny = open("Pass.ZioN","r+")
+	open("📶 Pass.ZioN","a")
+	Eny = open("📶 Pass.ZioN","r+")
 	
 	Lineas = Eny.readlines()
 	
