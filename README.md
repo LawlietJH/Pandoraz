@@ -7,19 +7,17 @@
 ![Banner](Capturas/Banners.png "Banners")
 
 - - -
-## Capturas:
-- - -
-### Menú de Interfaces de Red (Solo aparece si existe más de una Interfaz de Red Inalámbrica, interna y externas):
+### Capturas:
+
+#### Menú de Interfaces de Red (Solo aparecerá si existe más de una Interfaz de Red Inalámbrica, ya sea la Interna y/o Externas):
 
 ![Menu_Interfaces_De_Red](Capturas/Menu_Interfaces_De_Red.png "Menú Interfaces De Red")
 
-- - -
-### Interfaz Apagada:
+#### Interfaz Apagada:
 
 ![Informacion_De_Interfaz_Apagada](Capturas/Información_De_Interfaz_Apagada.png "Información De Interfaz Apagada")
 
-- - -
-### Escaneo Y Hackeo De Redes Wifi Exitoso:
+#### Escaneo Y Hackeo De Redes Wifi Exitoso:
 
 ![Escaneo_Exitoso](Capturas/Escaneo_Exitoso.png "Escaneo Exitoso")
 
@@ -43,20 +41,22 @@
 
 - - -
 
+### Más Detalles:
+
 * [+] Detecta Todas Las __Redes Wi-Fi__ detectadas con tu __Interfaz de Red Wi-Fi__.
 
 * [+] Si existe más de una __Interfaz de Red Wi-Fi__, aparecerá la opción de elegir una de las __Interfaces__ disponibles.
 
-* [+] Las __Contraseñas__ Obtenidas de Redes (Como ___Totalplay___ y ___Huawei___) Se Almacenarán Automaticamente en un __Archivo__ Llamado ___Pass.zion___
+* [+] Las __Contraseñas__ Obtenidas de Redes (Como ___Totalplay___ y ___Huawei___) Se Almacenarán Automaticamente en un __Archivo__ Llamado ___Pass.ZioN___
   
-  * [ \* ] Si de alguna red se consigue su __Contraseña__ y el nombre de la red ya existe en el archivo ___Pass.zion___, no se repetirá la red en el archivo. 
+  * [ \* ] Si de alguna red se consigue su __Contraseña__ y el nombre de la red ya existe en el archivo ___Pass.ZioN___, no se repetirá la red en el archivo.
 
 
-## Redes Que Posiblemente se Obtengas su Contraseña:
+## Redes Que Posiblemente se Obtenga su Contraseña:
 
 ***Con Nombres:***
 
- * "Totalplay-XXXX"
+ * __"Totalplay-XXXX"
  * "Huawei-XXXX-XXXX"
- * "DG860XXX"
+ * "DG860XXX"__
  * "TG862XXX"
