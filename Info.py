@@ -1,7 +1,7 @@
 import os
 
 os.system("cls && Title Pandoraz.py                "+\
-		"By: LawlietJH                v1.4.3    ")
+		"By: LawlietJH                v1.4.5    ")
 
 print("\n\n\n    [+] Información:", end="\n\n\n\n\t")
 print("  [*] 'Ctrl+C':\t  Si Se Está En Un Escaneo, Se Podra Salir", end="\n\t\t\t")
