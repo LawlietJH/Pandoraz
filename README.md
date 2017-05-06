@@ -20,7 +20,17 @@
 
 ### Eventod del Teclado:
 
-* Ctrl + C: 
+* Ctrl + C [Volver/Salir]:
+
+ [+] Si Se Está En Un Escaneo, Se Podra Salir Precionando 'Ctrl+C'. Si Hay Más De Una Interfaz De Red Para Elegir Volverá Al Menú De 'Selección De Interfaz'. Para Salir En Esta Ocasión Del Script Vuelva A Precionar 'Ctrl+C' En El Menú.
+
+* Ctrl + I:
+
+![Ctrl+I](Capturas/Ctrl+I.png "Precionando 'Ctrl+I'")
+
+
+![Ventana_De_Información](Capturas/Ventana_De_Información.png "Ventana De Información")
+
 
 - - -
 
