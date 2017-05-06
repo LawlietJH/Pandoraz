@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.4.4
+#                                                               v1.4.5
 
 import datetime
 import random
@@ -19,7 +19,7 @@ import os
 
 
 
-Version = "v1.4.4"
+Version = "v1.4.5"
 
 
 
@@ -506,7 +506,8 @@ def getPassRedes():
 				Cony += 1
 				Name = X
 				
-				if len(X) < 15: print(" [*] {} - {}".format(Cony, X), end="\t     ")
+				if len(X) == 6:  print(" [*] {} - {}".format(Cony, X), end="\t\t     ")
+				elif len(X) < 15: print(" [*] {} - {}".format(Cony, X), end="\t     ")
 				elif len(X) >= 15 and len(X) < 22: print(" [*] {} - {}".format(Cony, X), end="  ")
 				elif len(X) >= 22: print(" [*] {} - {}".format(Cony, X), end="  ")
 			
