@@ -25,13 +25,13 @@
 
 ### Eventos del Teclado:
 
-* Ctrl + C [Volver/Salir]:
+* ___Ctrl + C___ __[Volver/Salir]__:
 
-    * Si Se Está En Un __Escaneo__, Se Podrá __Salir__ Precionando ___'Ctrl+C'___.
-    * Si Hay Más De Una __Interfaz De Red__ Para Elegir, __Volverá__ Al __Menú__ De ___'Selección De Interfaz'___.
-    * Para __Salir__ En Esta Ocasión Del ___Script___ Vuelva A Precionar ___'Ctrl+C'___ En El __Menú_.
+    * Si Se Está En Un __Escaneo__, Se Podrá __Salir__ Precionando ***'Ctrl+C'*** .
+    * Si Hay Más De Una __Interfaz De Red__ Para Elegir, __Volverá__ Al __Menú__ De ***'Selección De Interfaz'*** .
+    * Para __Salir__ En Esta Ocasión Del ___Script___ Vuelva A Precionar ***'Ctrl+C'*** En El __Menú__.
 
-* Ctrl + I, Muestra Información [Capturas]:
+* ___Ctrl + I___, __Muestra Información [Capturas]__:
 
 ![Ctrl+I](Capturas/Ctrl+I.png "Precionando 'Ctrl+I'")
 
