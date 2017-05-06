@@ -27,9 +27,9 @@
 
 * Ctrl + C [Volver/Salir]:
 
-    * Si Se Está En Un Escaneo, Se Podra Salir Precionando 'Ctrl+C'.
-    * Si Hay Más De Una Interfaz De Red Para Elegir Volverá Al Menú De 'Selección De Interfaz'.
-    * Para Salir En Esta Ocasión Del Script Vuelva A Precionar 'Ctrl+C' En El Menú.
+    * Si Se Está En Un __Escaneo__, Se Podrá __Salir__ Precionando ___'Ctrl+C'___.
+    * Si Hay Más De Una __Interfaz De Red__ Para Elegir, __Volverá__ Al __Menú__ De ___'Selección De Interfaz'___.
+    * Para __Salir__ En Esta Ocasión Del ___Script___ Vuelva A Precionar ___'Ctrl+C'___ En El __Menú_.
 
 * Ctrl + I, Muestra Información [Capturas]:
 
@@ -47,7 +47,7 @@
 
 * [+] Si existe más de una __Interfaz de Red Wi-Fi__, aparecerá la opción de elegir una de las __Interfaces__ disponibles.
 
-* [+] Las __Contraseñas__ Obtenidas de Redes (Como ___Totalplay___ y ___Huawei___) Se Almacenarán Automaticamente en un __Archivo__ Llamado ___Pass.ZioN___
+* [+] Las __Contraseñas__ Obtenidas de Redes (Como ___Totalplay___ y ___Huawei___) Se Almacenarán __Automaticamente__ en un __Archivo__ Llamado ___Pass.ZioN___
   
   * [ \* ] Si de alguna red se consigue su __Contraseña__ y el nombre de la red ya existe en el archivo ___Pass.ZioN___, no se repetirá la red en el archivo.
 
@@ -56,7 +56,7 @@
 
 ***Con Nombres:***
 
- * __"Totalplay-XXXX"
- * "Huawei-XXXX-XXXX"
- * "DG860XXX"__
- * "TG862XXX"
+ * __"Totalplay-XXXX"__
+ * __"Huawei-XXXX-XXXX"__
+ * __"DG860XXX"__
+ * __"TG862XXX"__
