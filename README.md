@@ -6,6 +6,22 @@
 
 ![Banner](Capturas/Banners.png "Banners")
 
+### Capturas:
+
+![Menu_Interfaces_De_Red](Capturas/Menu_Interfaces_De_Red.png "Menú Interfaces De Red")
+
+
+![Información_De_Interfaz_Apagada](Capturas/Información_De_Interfaz_Apagada.png "Información De Interfaz Apagada")
+
+
+![Escaneo_Exitoso](Capturas/Escaneo_Exitoso.png "Escaneo Exitoso")
+
+- - -
+
+### Eventod del Teclado:
+
+* Ctrl + C: 
+
 - - -
 
 * [+] Detecta Todas Las __Redes Wi-Fi__ detectadas con tu __Interfaz de Red Wi-Fi__.
