@@ -19,7 +19,7 @@ import os
 
 
 
-Version = "v1.4.5"
+Version = "v1.4.6"
 
 
 
@@ -317,8 +317,11 @@ def ObtenerRedes():
 			
 			if Cont == 1:
 				
+				if x == "Totalplay-003D": x = "TOTALPLAY"
+				elif x == "CBGB": x = "Huawei-HG2568-ABCD"
+				
 				ESSID.append(x)
-				Tam += 1 
+				Tam += 1
 				
 			elif Cont == 2:
 				
@@ -465,6 +468,14 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Senial"][Pos])
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
+			
+	elif "TOTALPLAY" in str(Datos["ESSID"][Pos]):		# Para redes Totalplay de 6 Caracteres: TOTALPLAY_XXXXXX 
+			
+			Red = True
+			Redes.append(Datos["ESSID"][Pos])
+			Redes.append(Datos["Senial"][Pos])
+			Redes.append(Datos["Canal"][Pos])
+			Redes.append(Datos["BSSID"][Pos])
 
 	elif "DG860" in str(Datos["ESSID"][Pos]) or "TG862" in str(Datos["ESSID"][Pos]):	# Para Arris DG860/TG862
 			
@@ -474,13 +485,13 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
 	
-	elif len(Datos["ESSID"][Pos]) == 6:		# Para Cisco
+	#~ elif len(Datos["ESSID"][Pos]) == 6:		# Para Cisco
 			
-			Red = True
-			Redes.append(Datos["ESSID"][Pos])
-			Redes.append(Datos["Senial"][Pos])
-			Redes.append(Datos["Canal"][Pos])
-			Redes.append(Datos["BSSID"][Pos])
+			#~ Red = True
+			#~ Redes.append(Datos["ESSID"][Pos])
+			#~ Redes.append(Datos["Senial"][Pos])
+			#~ Redes.append(Datos["Canal"][Pos])
+			#~ Redes.append(Datos["BSSID"][Pos])
 
 def getPassRedes():
 	
@@ -506,10 +517,11 @@ def getPassRedes():
 				Cony += 1
 				Name = X
 				
-				if len(X) == 6:  print(" [*] {} - {}".format(Cony, X), end="\t\t     ")
-				elif len(X) < 15: print(" [*] {} - {}".format(Cony, X), end="\t     ")
-				elif len(X) >= 15 and len(X) < 22: print(" [*] {} - {}".format(Cony, X), end="  ")
-				elif len(X) >= 22: print(" [*] {} - {}".format(Cony, X), end="  ")
+				print(" [*] {} - {}".format(Cony, X), end=" "*(20-len(X)))
+				#~ if len(X) == 6:  print(" [*] {} - {}".format(Cony, X), end="\t\t     ")
+				#~ elif len(X) < 15: print(" [*] {} - {}".format(Cony, X), end="\t     ")
+				#~ elif len(X) >= 15 and len(X) < 22: print(" [*] {} - {}".format(Cony, X), end="  ")
+				#~ elif len(X) >= 22: print(" [*] {} - {}".format(Cony, X), end="  ")
 			
 			elif Cont == 2:
 				X = X.strip()
@@ -540,7 +552,7 @@ def getPass(Nombre, MAC):
 	Nomb1, Nomb2 = "", ""
 	Pass = ""
 	
-	if "Totalplay" in Nombre:
+	if "Totalplay" in Nombre:	# Para redes Totalplay de 4 Caracteres: Totalplay-XXXX 
 		
 		xD = Nombre.split("-")
 		
@@ -558,6 +570,18 @@ def getPass(Nombre, MAC):
 		MAC = MAC.split(":")
 		Pass = MAC[3] + MAC[4] + Nombre
 		
+	elif "TOTALPLAY" in Nombre:	# Para redes Totalplay de 6 Caracteres: TOTALPLAY_XXXXXX 
+		
+		xD = Nombre.split("_")
+		
+		if len(xD[1]) == 6:
+			
+			Nombre = Nombre[-6:-2]
+			MAC = MAC.split(":")
+			Pass = Nombre + MAC[4].lower() + MAC[5].lower()
+			
+		else: Pass = "UKNOWN"
+		
 	elif "DG860" in Nombre or "TG862" in Nombre:	# Para Arris DG860/TG862
 		
 		Nombre1 = Nombre[:-2]
@@ -565,9 +589,9 @@ def getPass(Nombre, MAC):
 		MAC = MAC.split(":")
 		Pass = Nombre1 + MAC[3] + MAC[4] + Nombre2
 	
-	elif len(Nombre) == 6:
+	#~ elif len(Nombre) == 6:
 		
-		Pass = "27???????"
+		#~ Pass = "27???????"
 		
 	return Pass
 
