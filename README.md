@@ -58,5 +58,6 @@
 
  * __"Totalplay-XXXX"__
  * __"Huawei-XXXX-XXXX"__
+ * __"TOTALPLAY_XXXXXX"__
  * __"DG860XXX"__
  * __"TG862XXX"__
