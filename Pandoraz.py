@@ -13,13 +13,14 @@
 
 import datetime
 import random
-import locale
+import locale 
+import msvcrt
 import time
 import os
 
 
 
-Version = "v1.4.7"
+Version = "v1.4.8"
 
 
 
@@ -79,6 +80,10 @@ def Chk_Dep():
 		import keyboard
 		
 	except ModuleNotFoundError:
+		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
+		os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
+		
+	except ImportError:
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
 		os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
 		
@@ -219,13 +224,16 @@ def Chk_WiFi(Cadena):
 				
 				Inter = "Conexi¢n de red inal mbrica"
 				
-			try: 
-				Resp = input("\n\n\t\t [+] Selecciona Una Interfaz: ")
-						
+			try:
+				
+				#~ Resp = input("\n\n\t\t [+] Selecciona Una Interfaz: ")
+				print("\n\n\t\t [+] Selecciona Una Interfaz: ")
+				Resp = msvcrt.getch()
+				
 				if Resp == "": print("\n\n\t [!] Elige Una Opción!"), time.sleep(1)
 				else:
 					
-					if int(Resp) > 1: Inter += " " + Resp
+					if int(Resp) > 1: Inter += " " + str(int(Resp))
 					
 					if Inter in Cadena:
 												
@@ -239,8 +247,11 @@ def Chk_WiFi(Cadena):
 				Dat()
 				Salir(0)
 			except ValueError: print("\n\n\t [!] Caracteres No Validos!"), time.sleep(1)
+			
+			except EOFError: Salir(1)
 					
 			except Exception as ex: print(type(ex).__name__), time.sleep(1)
+			
 		
 		else: break
 	
@@ -563,7 +574,7 @@ def getPass(Nombre, MAC):
 			
 		else: Pass = "UKNOWN"
 	
-	elif "Huawei" in Nombre:
+	elif "Huawei" in Nombre:		# Para redes Huawei-XXXX-XXXX
 		
 		try: xD = Nombre.split("-")[2]
 		except: Pass = "UNKNOWN"
@@ -589,13 +600,17 @@ def getPass(Nombre, MAC):
 			
 		else: Pass = "UKNOWN"
 		
-	elif "DG860" in Nombre or "TG862" in Nombre:	# Para Arris DG860/TG862
+	elif "DG860" in Nombre or "TG862" in Nombre:	# Para Redes Arris DG860XXX/TG862XXX.
 		
-		Nombre1 = Nombre[:-2]
-		Nombre2 = Nombre[-2:]
-		MAC = MAC.split(":")
-		Pass = Nombre1 + MAC[3] + MAC[4] + Nombre2
-	
+		if len(Nombre) == 8:
+			
+			Nombre1 = Nombre[:6]
+			Nombre2 = Nombre[-2:]
+			MAC = MAC.split(":")
+			Pass = Nombre1 + MAC[3] + MAC[4] + Nombre2
+		
+		else: Pass = "UNKNOWN"
+		
 	#~ elif len(Nombre) == 6:
 		
 		#~ Pass = "27???????"
