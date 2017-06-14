@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.4.5
+#                                                               v1.4.9
 
 import datetime
 import random
@@ -20,7 +20,7 @@ import os
 
 
 
-Version = "v1.4.8"
+Version = "v1.4.9"
 
 
 
@@ -328,6 +328,7 @@ def ObtenerRedes():
 			
 			if Cont == 1:
 				
+				if x == "Totalplay-003D": x = "TOTALPLAY"
 				ESSID.append(x)
 				Tam += 1
 				
@@ -589,17 +590,10 @@ def getPass(Nombre, MAC):
 		
 	elif "TOTALPLAY" in Nombre:	# Para redes Totalplay de 6 Caracteres: TOTALPLAY_XXXXXX 
 		
-		try: xD = Nombre.split("_")[1]
-		except: Pass = "UNKNOWN"
+		MAC = MAC.split(":")
 		
-		if len(xD) == 6:
-			
-			Nombre = Nombre[-6:-2]
-			MAC = MAC.split(":")
-			Pass = Nombre + MAC[4].lower() + MAC[5].lower()
-			
-		else: Pass = "UKNOWN"
-		
+		Pass = MAC[3].upper() + MAC[4].upper() + MAC[4].lower() + MAC[5].lower()
+				
 	elif "DG860" in Nombre or "TG862" in Nombre:	# Para Redes Arris DG860XXX/TG862XXX.
 		
 		if len(Nombre) == 8:
