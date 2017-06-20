@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.4.9
+#                                                               v1.5.0
 
 import datetime
 import random
@@ -20,7 +20,7 @@ import os
 
 
 
-Version = "v1.4.9"
+Version = "v1.5.0"
 
 
 
@@ -79,6 +79,8 @@ def Chk_Dep():
 	try:
 		import keyboard
 		
+	#~ os.system("pip install pypiwin32")
+		
 	except ModuleNotFoundError:
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
 		os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
@@ -86,6 +88,22 @@ def Chk_Dep():
 	except ImportError:
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
 		os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
+		
+	except Exception as ex:
+		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
+	
+	#===================================================================
+	
+	try:
+		import win32api
+		
+	except ModuleNotFoundError:
+		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
+		os.system("Title Instalando Keyboard && pip install pypiwin32 > Nul && cls && Title Pandoraz.py            By: LawlietJH")
+		
+	except ImportError:
+		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
+		os.system("Title Instalando Keyboard && pip install pypiwin32 > Nul && cls && Title Pandoraz.py            By: LawlietJH")
 		
 	except Exception as ex:
 		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
@@ -98,7 +116,23 @@ try:
 except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
 	print("\n\n   No se pudo instalar correctamente el Módulo 'keyboard'.")
 	print("\n   Revise Su Conexión o Instale El Módulo Manualmente Desde Consola Con:")
-	print("\n\t 'pip install keyboard'   o   ' pip3 install keyboard'")
+	print("\n\t 'pip install keyboard'   o   'pip3 install keyboard'")
+	
+	try:
+		os.system("Pause > Nul")
+	except KeyboardInterrupt: pass
+	
+	Dat()
+	Salir(0)
+
+
+
+try:
+	import win32api 	# Se Importa El Módulo.
+except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
+	print("\n\n   No se pudo instalar correctamente el Módulo 'pypiwin32'.")
+	print("\n   Revise Su Conexión o Instale El Módulo Manualmente Desde Consola Con:")
+	print("\n\t 'pip install pypiwin32'   o   'pip3 install pypiwin32'")
 	
 	try:
 		os.system("Pause > Nul")
@@ -328,7 +362,6 @@ def ObtenerRedes():
 			
 			if Cont == 1:
 				
-				if x == "Totalplay-003D": x = "TOTALPLAY"
 				ESSID.append(x)
 				Tam += 1
 				
@@ -527,10 +560,6 @@ def getPassRedes():
 				Name = X
 				
 				print(" [*] {} - {}".format(Cony, X), end=" "*(20-len(X)))
-				#~ if len(X) == 6:  print(" [*] {} - {}".format(Cony, X), end="\t\t     ")
-				#~ elif len(X) < 15: print(" [*] {} - {}".format(Cony, X), end="\t     ")
-				#~ elif len(X) >= 15 and len(X) < 22: print(" [*] {} - {}".format(Cony, X), end="  ")
-				#~ elif len(X) >= 22: print(" [*] {} - {}".format(Cony, X), end="  ")
 			
 			elif Cont == 2:
 				X = X.strip()
@@ -692,6 +721,7 @@ def Atajos():
 			
 			if keyboard.is_pressed('Ctrl + I'):	# Si Se Preciona Las Teclas 'Ctrl+I' Se Obtiene Información.
 				
+				Sleep(0.5)
 				#~ os.system("Title [+] Información! ")
 				GetInfo()	# Muestra Información.
 				Imp()	# Limpia El Buffer.
@@ -779,9 +809,7 @@ def Imp():	# Limpia El Buffer (Flush)
 def Run(Programa=""):
 	
 	import traceback, types
-	
-	#~ os.system("pip install pypiwin32 > Nul")
-	
+		
 	import win32api, win32con, win32event, win32process
 	from win32com.shell.shell import ShellExecuteEx
 	from win32com.shell import shellcon
