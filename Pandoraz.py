@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.5.5
+#                                                               v1.5.6
 
 import datetime
 import random
@@ -21,7 +21,7 @@ import os
 
 
 
-Version = "v1.5.5"
+Version = "v1.5.6"
 
 
 
@@ -101,7 +101,7 @@ def Sleep(Num=1.5):	# Hace una Pausa Temporal.
 
 def Chk_Dep():
 	
-	if sys.version[2] == "5":
+	if sys.version[2] == "4" or sys.version[2] == "5":
 		
 		try:
 			import keyboard
@@ -110,11 +110,11 @@ def Chk_Dep():
 			
 		except NameError:	# Python 3.5
 			print("\n\n\t[!] Instalando Dependencias... Módulo 'Keyboard'\n\n\t\t")
-			os.system("Title Instalando Keyboard && pip install keyboard && Title Pandoraz.py            By: LawlietJH")
+			os.system("Title Instalando Keyboard && py -m pip install keyboard && Title Pandoraz.py            By: LawlietJH")
 			
 		except ImportError:
 			print("\n\n\t[!] Instalando Dependencias... Módulo 'Keyboard'\n\n\t\t")
-			os.system("Title Instalando Keyboard && pip install keyboard && Title Pandoraz.py            By: LawlietJH")
+			os.system("Title Instalando Keyboard && py -m pip install keyboard && Title Pandoraz.py            By: LawlietJH")
 			
 		except Exception as ex:
 			print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
@@ -128,11 +128,11 @@ def Chk_Dep():
 			
 		except NameError:	# Python 3.5
 			print("\n\n\t[!] Instalando Dependencias... Módulo 'pypiwin32'\n\n\t\t")
-			os.system("Title Instalando pypiwin32 && pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
+			os.system("Title Instalando pypiwin32 && py -m pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
 			
 		except ImportError:
 			print("\n\n\t[!] Instalando Dependencias... Módulo 'pypiwin32'\n\n\t\t")
-			os.system("Title Instalando pypiwin32 && pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
+			os.system("Title Instalando pypiwin32 && py -m pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
 			
 		except Exception as ex:
 			print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
@@ -146,11 +146,11 @@ def Chk_Dep():
 			
 		except ModuleNotFoundError:	# Python 3.6
 			print("\n\n\t[!] Instalando Dependencias... Módulo 'keyboard'\n\n\t\t")
-			os.system("Title Instalando Keyboard && pip install keyboard && Title Pandoraz.py            By: LawlietJH")
+			os.system("Title Instalando Keyboard && py -m pip install keyboard && Title Pandoraz.py            By: LawlietJH")
 			
 		except ImportError:
 			print("\n\n\t[!] Instalando Dependencias... Módulo 'keyboard'\n\n\t\t")
-			os.system("Title Instalando Keyboard && pip install keyboard Title Pandoraz.py            By: LawlietJH")
+			os.system("Title Instalando Keyboard && py -m pip install keyboard Title Pandoraz.py            By: LawlietJH")
 			
 		except Exception as ex:
 			print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
@@ -164,12 +164,12 @@ def Chk_Dep():
 			
 		except ModuleNotFoundError:	# Python 3.6
 			print("\n\n\t[!] Instalando Dependencias... Módulo 'pypiwin32'\n\n\t\t")
-			os.system("Title Instalando pypiwin32 && pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
+			os.system("Title Instalando pypiwin32 && py -m pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
 			Sleep(5)
 			
 		except ImportError:
 			print("\n\n\t[!] Instalando Dependencias... Módulo 'pypiwin32'\n\n\t\t")
-			os.system("Title Instalando pypiwin32 && pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
+			os.system("Title Instalando pypiwin32 && py -m pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
 			Sleep(5)
 			
 		except Exception as ex:
@@ -177,7 +177,11 @@ def Chk_Dep():
 			
 	else:
 		
-		print("\n\n\n\n    [!] Compatibilidad con:\n\n\t\t [+] Python 3.5.X\n\t\t [+] Python 3.6.X\n\n    [!] Solamente estos, Por Ahora."+
+		print("\n\n\n\n    [!] Compatibilidad con:"+
+		"\n\n\t\t [+] Python 3.4.X"+
+		"\n\t\t [+] Python 3.5.X"+
+		"\n\t\t [+] Python 3.6.X"+
+		"\n\n    [!] Solamente estos, Por Ahora."+
 		"\n\n\n\n    [!] Tu Versión Actual es: Python", sys.version[:5], "\n\n\n\n")
 		Pause(False)
 		Dat()
@@ -1034,11 +1038,13 @@ def Main():
 
 if __name__ == "__main__":
 	
+	os.system("Color 0A")
+	
 	if isWindows():
 		
 		if isPyver3(): Main()
 		else:
-			print("\n\n\t Compatible Solo Con Versiones 3.5.X y 3.6.X de Python.")
+			print("\n\n\t Compatible Solo Con Versiones 3.4.X, 3.5.X y 3.6.X de Python.")
 			Pause()
 	else:
 		print("\n\n\t Compatible Solo Con Windows.")
