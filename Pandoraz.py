@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.5.1
+#                                                               v1.5.2
 
 import datetime
 import random
@@ -20,7 +20,7 @@ import os
 
 
 
-Version = "v1.5.1"
+Version = "v1.5.2"
 
 
 
@@ -81,11 +81,11 @@ def Chk_Dep():
 		
 	#~ os.system("pip install pypiwin32")
 		
-	#~ except ModuleNotFoundError:
+	#~ except ModuleNotFoundError:	# Python 3.6
 		#~ print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
 		#~ os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
 		
-	except NameError:
+	except NameError:	# Python 3.5
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
 		os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
 		
@@ -101,11 +101,11 @@ def Chk_Dep():
 	try:
 		import win32api
 		
-	#~ except ModuleNotFoundError:
+	#~ except ModuleNotFoundError:	# Python 3.6
 		#~ print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
 		#~ os.system("Title Instalando Keyboard && pip install pypiwin32 > Nul && cls && Title Pandoraz.py            By: LawlietJH")
 		
-	except NameError:
+	except NameError:	# Python 3.5
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
 		os.system("Title Instalando Keyboard && pip install pypiwin32 > Nul && cls && Title Pandoraz.py            By: LawlietJH")
 		
@@ -158,20 +158,57 @@ except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
 def Salir(Num=0):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
 	
 	try:
-		time.sleep(1.5)
+		Sleep(1.5)
 		exit(Num)
 	except KeyboardInterrupt:
 		Salir(Num)
 
 
 
-#~ def Pause(Quiet=False):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
+def PressON(Cadena=""):		# Permite Capturar 1 Caracter Que se Escriba en Pantalla,
+							# Como un Input() pero de 1 solo caracter.
 	
-	#~ try:
-		#~ time.sleep(1.5)
-		#~ exit(Num)
-	#~ except KeyboardInterrupt:
-		#~ Salir(Num)
+	Imp()
+	
+	print(Cadena, end="")
+	Resp = msvcrt.getch()
+	print(Resp)
+	
+	return Resp
+
+
+
+def Pause(Quiet=True):		# Hace Una Pausa.
+	
+	if Quiet: os.system("Pause > Nul")		# No muestra Nada En Pantalla.
+	
+	else: os.system("Pause")		# Muestra En Pantalla: Presione una tecla para continuar...
+
+
+
+def Clear():		# Limpia Pantalla.
+	
+	os.system("Cls")
+
+
+
+def Sleep(Num=1.5):	# Hace una Pausa Temporal.
+	
+	time.sleep(Num)
+
+
+
+def Ctrl_C():
+	
+	try:
+		print("\n\n\n\n\t\t [!] Cancelado...")
+		os.system("title Cancelando... && timeout /nobreak 03 > Nul")
+		return
+		
+	except KeyboardInterrupt:
+		
+		Ctrl_C()
+
 
 
 
@@ -278,11 +315,9 @@ def Chk_WiFi(Cadena):
 				
 			try:
 				
-				#~ Resp = input("\n\n\t\t [+] Selecciona Una Interfaz: ")
-				print("\n\n\t\t [+] Selecciona Una Interfaz: ")
-				Resp = msvcrt.getch()
+				Resp = PressON("\n\n\t\t [+] Selecciona Una Interfaz: ")
 				
-				if Resp == "": print("\n\n\t [!] Elige Una Opción!"), time.sleep(1)
+				if Resp == "": print("\n\n\t [!] Elige Una Opción!"), Sleep(1)
 				else:
 					
 					if int(Resp) > 1: Inter += " " + str(int(Resp))
@@ -293,16 +328,16 @@ def Chk_WiFi(Cadena):
 						RxD = True
 						break
 						
-					else: print("\n\n\t [!] Opción Inexistente!"), time.sleep(1)
+					else: print("\n\n\t [!] Opción Inexistente!"), Sleep(1)
 				
 			except KeyboardInterrupt:
 				Dat()
 				Salir(0)
-			except ValueError: print("\n\n\t [!] Caracteres No Validos!"), time.sleep(1)
+			except ValueError: print("\n\n\t [!] Caracteres No Validos!"), Sleep(1)
 			
 			except EOFError: Salir(1)
 					
-			except Exception as ex: print(type(ex).__name__), time.sleep(1)
+			except Exception as ex: print(type(ex).__name__), Sleep(1)
 			
 		
 		else: break
@@ -346,7 +381,7 @@ def ObtenerRedes():
 		try:
 			print("\n\n\n\t [!] No hay Interfaces de Red wi-Fi Disponibles!\n\n")
 			print("\n\n\t [!] Saliendo...")
-			time.sleep(3)
+			Sleep(3)
 			Dat()
 			Salir(0)
 		except KeyboardInterrupt:
@@ -380,7 +415,6 @@ def ObtenerRedes():
 			
 			if Cont == 1:
 				
-				#~ if "Totalplay" in x: x = "Ubee"
 				ESSID.append(x)
 				Tam += 1
 				
@@ -515,14 +549,14 @@ def getNameRedes(Datos, Pos):
 	
 	global Red, Redes
 	
-	if "Totalplay" in Datos["ESSID"][Pos]:
+	if "Totalplay" in Datos["ESSID"][Pos]:		# Para redes Totalplay de 4 Caracteres: Totalplay-XXXX 
 			Red = True
 			Redes.append(Datos["ESSID"][Pos])
 			Redes.append(Datos["Senial"][Pos])
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
 	
-	elif "Huawei" in str(Datos["ESSID"][Pos]):
+	elif "Huawei" in str(Datos["ESSID"][Pos]):		# Para redes Huawei: Huawei-XXXX-XXXX 
 		
 			Red = True
 			Redes.append(Datos["ESSID"][Pos])
@@ -538,7 +572,7 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
 
-	elif "DG860" in str(Datos["ESSID"][Pos]) or "TG862" in str(Datos["ESSID"][Pos]):	# Para Arris DG860/TG862
+	elif "DG860" in str(Datos["ESSID"][Pos]) or "TG862" in str(Datos["ESSID"][Pos]):	# Para redes Arris DG860/TG862
 			
 			Red = True
 			Redes.append(Datos["ESSID"][Pos])
@@ -546,7 +580,7 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
 			
-	elif "Ubee" in str(Datos["ESSID"][Pos]):	# Para UbeeXXXX (Megacable)
+	elif "Ubee" in str(Datos["ESSID"][Pos]):	# Para redes UbeeXXXX (De Megacable)
 			
 			Red = True
 			Redes.append(Datos["ESSID"][Pos])
@@ -554,7 +588,7 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
 	
-	#~ elif len(Datos["ESSID"][Pos]) == 6:		# Para Cisco
+	#~ elif len(Datos["ESSID"][Pos]) == 6:		# Para redes Cisco/Pegatron
 			
 			#~ Red = True
 			#~ Redes.append(Datos["ESSID"][Pos])
@@ -618,7 +652,7 @@ def getPass(Nombre, MAC):
 	Pass = ""
 	xD = ""
 	
-	if "Totalplay" in Nombre:	# Para redes Totalplay de 4 Caracteres: Totalplay-XXXX 
+	if "Totalplay" in Nombre:	# Para redes Totalplay de 4 Caracteres: Totalplay-XXXX.
 		
 		try: xD = Nombre.split("-")[1]
 		except: Pass = "UNKNOWN"
@@ -631,7 +665,7 @@ def getPass(Nombre, MAC):
 			
 		else: Pass = "UKNOWN"
 	
-	elif "Huawei" in Nombre:		# Para redes Huawei-XXXX-XXXX
+	elif "Huawei" in Nombre:		# Para redes Huawei-XXXX-XXXX.
 		
 		try: xD = Nombre.split("-")[2]
 		except: Pass = "UNKNOWN"
@@ -644,7 +678,7 @@ def getPass(Nombre, MAC):
 			
 		else:  Pass = "UKNOWN"
 		
-	elif "TOTALPLAY" in Nombre:	# Para redes Totalplay de 6 Caracteres: TOTALPLAY_XXXXXX 
+	elif "TOTALPLAY" in Nombre:	# Para redes Totalplay de 6 Caracteres: TOTALPLAY_XXXXXX.
 		
 		MAC = MAC.split(":")
 		
@@ -661,7 +695,7 @@ def getPass(Nombre, MAC):
 		
 		else: Pass = "UNKNOWN"
 	
-	elif "Ubee" in Nombre:	# Para UbeeXXXX 
+	elif "Ubee" in Nombre:	# Para redes UbeeXXXX de Megacable. 
 		
 		if len(Nombre) == 8:
 			
@@ -797,7 +831,7 @@ def Atajos():
 					
 					randy = random.choice(Lista)
 					print("\n\n\n\t\t [+] " + randy)
-					time.sleep(1.5)
+					Sleep(1.5)
 					break
 				
 				elif dt2 == dt: break		# Si Ambos Tiempos Son Iguales, Significa Que Paso 1 Segundo y se Cierra El Ciclo.
@@ -819,7 +853,7 @@ def GetInfo():
 		
 		print("\n\n\t [!] Saliendo...")
 		try:
-			time.sleep(1.5)
+			Sleep(1.5)
 		except KeyboardInterrupt: pass
 		Dat()
 		Salir(0)
@@ -908,6 +942,7 @@ def Main():
 			#~ except KeyboardInterrupt: pass
 			
 
-
-Main()
+if __name__ == "__main__":
+	
+	Main()
 
