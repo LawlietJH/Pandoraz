@@ -402,6 +402,8 @@ def Chk_WiFi(Cadena):
 				if Resp == "": print("\n\n\t [!] Elige Una Opción!"), Sleep(1)
 				else:
 					
+					if Resp == b"\x03": Dat(), Salir(0)
+					
 					if int(Resp) > 1: Inter += " " + str(int(Resp))
 					
 					if Inter in Cadena:
