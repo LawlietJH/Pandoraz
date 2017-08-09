@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.5.0
+#                                                               v1.5.1
 
 import datetime
 import random
@@ -20,7 +20,7 @@ import os
 
 
 
-Version = "v1.5.0"
+Version = "v1.5.1"
 
 
 
@@ -81,7 +81,11 @@ def Chk_Dep():
 		
 	#~ os.system("pip install pypiwin32")
 		
-	except ModuleNotFoundError:
+	#~ except ModuleNotFoundError:
+		#~ print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
+		#~ os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
+		
+	except NameError:
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
 		os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
 		
@@ -97,7 +101,11 @@ def Chk_Dep():
 	try:
 		import win32api
 		
-	except ModuleNotFoundError:
+	#~ except ModuleNotFoundError:
+		#~ print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
+		#~ os.system("Title Instalando Keyboard && pip install pypiwin32 > Nul && cls && Title Pandoraz.py            By: LawlietJH")
+		
+	except NameError:
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
 		os.system("Title Instalando Keyboard && pip install pypiwin32 > Nul && cls && Title Pandoraz.py            By: LawlietJH")
 		
@@ -154,6 +162,16 @@ def Salir(Num=0):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
 		exit(Num)
 	except KeyboardInterrupt:
 		Salir(Num)
+
+
+
+#~ def Pause(Quiet=False):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
+	
+	#~ try:
+		#~ time.sleep(1.5)
+		#~ exit(Num)
+	#~ except KeyboardInterrupt:
+		#~ Salir(Num)
 
 
 
@@ -362,6 +380,7 @@ def ObtenerRedes():
 			
 			if Cont == 1:
 				
+				#~ if "Totalplay" in x: x = "Ubee"
 				ESSID.append(x)
 				Tam += 1
 				
@@ -526,6 +545,14 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Senial"][Pos])
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
+			
+	elif "Ubee" in str(Datos["ESSID"][Pos]):	# Para UbeeXXXX (Megacable)
+			
+			Red = True
+			Redes.append(Datos["ESSID"][Pos])
+			Redes.append(Datos["Senial"][Pos])
+			Redes.append(Datos["Canal"][Pos])
+			Redes.append(Datos["BSSID"][Pos])
 	
 	#~ elif len(Datos["ESSID"][Pos]) == 6:		# Para Cisco
 			
@@ -633,7 +660,20 @@ def getPass(Nombre, MAC):
 			Pass = Nombre1 + MAC[3] + MAC[4] + Nombre2
 		
 		else: Pass = "UNKNOWN"
+	
+	elif "Ubee" in Nombre:	# Para UbeeXXXX 
 		
+		if len(Nombre) == 8:
+			
+			MAC = MAC.split(":")
+			Nomb1 = MAC[1] + MAC[2] + MAC[3]
+			Nomb2 = Nombre[-4:]
+			
+			Pass = Nomb1 + Nomb2
+			Pass = Pass.upper()
+		
+		#~ else:
+	
 	#~ elif len(Nombre) == 6:
 		
 		#~ Pass = "27???????"
