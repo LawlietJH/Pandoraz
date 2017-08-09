@@ -1,6 +1,6 @@
 # Pandoraz
 ## Obten Contraseñas De Redes Wi-Fi En Windows con Python.
-## [+] Contraseñas: Totalplay y Huawei.
+## [+] Contraseñas: Totalplay, TOTALPLAY, Ubee y Huawei.
 
 - - -
 
@@ -47,7 +47,7 @@
 
 * [+] Si existe más de una __Interfaz de Red Wi-Fi__, aparecerá la opción de elegir una de las __Interfaces__ disponibles.
 
-* [+] Las __Contraseñas__ Obtenidas de Redes (Como ___Totalplay___ y ___Huawei___) Se Almacenarán __Automaticamente__ en un __Archivo__ Llamado ___Pass.ZioN___
+* [+] Las __Contraseñas__ Obtenidas de Redes (Como ___Totalplay, TOTALPLAY, Ubee, Huawei___, ect) Se Almacenarán __Automaticamente__ en un __Archivo__ Llamado ___📶 Pass.ZioN___
   
   * [ \* ] Si de alguna red se consigue su __Contraseña__ y el nombre de la red ya existe en el archivo ___Pass.ZioN___, no se repetirá la red en el archivo.
 
@@ -56,6 +56,7 @@
 
 ***Con Nombres:***
 
+ * __"UbeeXXXX"__
  * __"Totalplay-XXXX"__
  * __"Huawei-XXXX-XXXX"__
  * __"TOTALPLAY_XXXXXX"__
