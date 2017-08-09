@@ -1,5 +1,5 @@
 # -*- Coding: UTF-8 -*-
-# Python 3.5
+# Python 3.5.X y 3.6.X
 # Windows
 #
 #   ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ██████╗  █████╗ ███████╗
@@ -9,18 +9,19 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.5.3
+#                                                               v1.5.4
 
 import datetime
 import random
 import locale 
 import msvcrt
 import time
+import sys
 import os
 
 
 
-Version = "v1.5.3"
+Version = "v1.5.4"
 
 
 
@@ -74,93 +75,11 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 
 
 
-def Chk_Dep():
+def Pause(Quiet=True):		# Hace Una Pausa.
 	
-	try:
-		import keyboard
-		
-	#~ os.system("pip install pypiwin32")
-		
-	#~ except ModuleNotFoundError:	# Python 3.6
-		#~ print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
-		#~ os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
-		
-	except NameError:	# Python 3.5
-		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
-		os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
-		
-	except ImportError:
-		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
-		os.system("Title Instalando Keyboard && pip install keyboard > Nul && cls && Title Pandoraz.py            By: LawlietJH")
-		
-	except Exception as ex:
-		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
+	if Quiet: os.system("Pause > Nul")		# No muestra Nada En Pantalla.
 	
-	#===================================================================
-	
-	try:
-		import win32api
-		
-	#~ except ModuleNotFoundError:	# Python 3.6
-		#~ print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
-		#~ os.system("Title Instalando Keyboard && pip install pypiwin32 > Nul && cls && Title Pandoraz.py            By: LawlietJH")
-		
-	except NameError:	# Python 3.5
-		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
-		os.system("Title Instalando Keyboard && pip install pypiwin32 > Nul && cls && Title Pandoraz.py            By: LawlietJH")
-		
-	except ImportError:
-		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
-		os.system("Title Instalando Keyboard && pip install pypiwin32 > Nul && cls && Title Pandoraz.py            By: LawlietJH")
-		
-	except Exception as ex:
-		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
-
-
-
-Chk_Dep()				#~ Se instala el módulo keyboard si este no esta instalado.
-try:
-	import keyboard 	# Se Importa El Módulo.
-except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
-	print("\n\n   No se pudo instalar correctamente el Módulo 'keyboard'.")
-	print("\n   Revise Su Conexión o Instale El Módulo Manualmente Desde Consola Con:")
-	print("\n\t 'pip install keyboard'   o   'pip3 install keyboard'")
-	
-	try:
-		os.system("Pause > Nul")
-	except KeyboardInterrupt: pass
-	
-	Dat()
-	Salir(0)
-
-
-
-try:
-	import win32api 	# Se Importa El Módulo.
-except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
-	print("\n\n   No se pudo instalar correctamente el Módulo 'pypiwin32'.")
-	print("\n   Revise Su Conexión o Instale El Módulo Manualmente Desde Consola Con:")
-	print("\n\t 'pip install pypiwin32'   o   'pip3 install pypiwin32'")
-	
-	try:
-		os.system("Pause > Nul")
-	except KeyboardInterrupt: pass
-	
-	Dat()
-	Salir(0)
-
-
-
-#=======================================================================
-
-
-
-def isWindows():
-	
-	osver = os.popen("ver").read()
-	
-	if osver.find("Windows") > 0: return True
-	else: return False
+	else: os.system("Pause")		# Muestra En Pantalla: Presione una tecla para continuar...
 
 
 
@@ -173,6 +92,174 @@ def Salir(Num=0):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
 		Salir(Num)
 
 
+
+def Sleep(Num=1.5):	# Hace una Pausa Temporal.
+	
+	time.sleep(Num)
+
+
+
+def Chk_Dep():
+	
+	if sys.version[2] == "5":
+		
+		try:
+			import keyboard
+			
+			print("\n\n\t[!] Checando Dependencias... Módulo 'keyboard' OK\t\t"), Sleep(.5)
+			
+		except NameError:	# Python 3.5
+			print("\n\n\t[!] Instalando Dependencias... Módulo 'Keyboard'\n\n\t\t")
+			os.system("Title Instalando Keyboard && pip install keyboard && Title Pandoraz.py            By: LawlietJH")
+			
+		except ImportError:
+			print("\n\n\t[!] Instalando Dependencias... Módulo 'Keyboard'\n\n\t\t")
+			os.system("Title Instalando Keyboard && pip install keyboard && Title Pandoraz.py            By: LawlietJH")
+			
+		except Exception as ex:
+			print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
+	
+		#===================================================================
+		
+		try:
+			import win32api
+			
+			print("\n\n\t[!] Checando Dependencias... Módulo 'pypiwin32' OK\n\n\t\t"), Sleep(.5)
+			
+		except NameError:	# Python 3.5
+			print("\n\n\t[!] Instalando Dependencias... Módulo 'pypiwin32'\n\n\t\t")
+			os.system("Title Instalando pypiwin32 && pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
+			
+		except ImportError:
+			print("\n\n\t[!] Instalando Dependencias... Módulo 'pypiwin32'\n\n\t\t")
+			os.system("Title Instalando pypiwin32 && pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
+			
+		except Exception as ex:
+			print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
+
+	elif sys.version[2] == "6":
+
+		try:
+			import keyboard
+			
+			print("\n\n\t[!] Checando Dependencias... Módulo 'keyboard' OK\t\t"), Sleep(.5)
+			
+		except ModuleNotFoundError:	# Python 3.6
+			print("\n\n\t[!] Instalando Dependencias... Módulo 'keyboard'\n\n\t\t")
+			os.system("Title Instalando Keyboard && pip install keyboard && Title Pandoraz.py            By: LawlietJH")
+			
+		except ImportError:
+			print("\n\n\t[!] Instalando Dependencias... Módulo 'keyboard'\n\n\t\t")
+			os.system("Title Instalando Keyboard && pip install keyboard Title Pandoraz.py            By: LawlietJH")
+			
+		except Exception as ex:
+			print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
+	
+		#===================================================================
+		
+		try:
+			import win32api
+			
+			print("\n\n\t[!] Checando Dependencias... Módulo 'pypiwin32' OK\n\n\t\t"), Sleep(.5)
+			
+		except ModuleNotFoundError:	# Python 3.6
+			print("\n\n\t[!] Instalando Dependencias... Módulo 'pypiwin32'\n\n\t\t")
+			os.system("Title Instalando pypiwin32 && pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
+			Sleep(5)
+			
+		except ImportError:
+			print("\n\n\t[!] Instalando Dependencias... Módulo 'pypiwin32'\n\n\t\t")
+			os.system("Title Instalando pypiwin32 && pip install pypiwin32 && Title Pandoraz.py            By: LawlietJH")
+			Sleep(5)
+			
+		except Exception as ex:
+			print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
+			
+	else:
+		
+		print("\n\n\n\n    [!] Compatibilidad con:\n\n\t\t [+] Python 3.5.X\n\t\t [+] Python 3.6.X\n\n    [!] Solamente estos, Por Ahora."+
+		"\n\n\n\n    [!] Tu Versión Actual es: Python", sys.version[:5], "\n\n\n\n")
+		Pause(False)
+		Dat()
+		Salir()
+		
+Chk_Dep()				#~ Se instalan los módulos keyboard y pypiwin32 si estos no estan instalados.
+
+try:
+	import keyboard 	# Se Importa El Módulo.
+except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
+	print("\n\n   No se pudo instalar correctamente el Módulo 'keyboard'.")
+	print("\n   Revise Su Conexión o Instale El Módulo Manualmente Desde Consola Con:")
+	print("\n\t 'pip install keyboard'   o   'pip3 install keyboard'")
+	
+	try:
+		Pause()
+	except KeyboardInterrupt: pass
+	
+	Dat()
+	Salir(1)
+
+try:
+	import win32api 	# Se Importa El Módulo.
+except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
+	
+	print("\n\n [!] Cierra y Vuelve a Abrir este Script Para Que este Actualizado con el Nuevo Módulo."), Sleep(2)
+	print("\n\n [!] Si no se instalo correctamente el Módulo: "), Sleep(2)
+	#~ print("\n\n   No se pudo instalar correctamente el Módulo 'pypiwin32'.")
+	print("\n   Revise Su Conexión o Instale El Módulo Manualmente Desde Consola Con:")
+	print("\n\t 'pip install pypiwin32'   o   'pip3 install pypiwin32'")
+	
+	try:
+		Pause()
+	except KeyboardInterrupt: pass
+	
+	Dat()
+	Salir(1)
+
+
+
+#=======================================================================
+
+
+# Función Que Comprueba si el SO es Windows, Devuelve TRUE/FALSE
+def isWindows():
+	
+	osver = os.popen("ver").read()
+	
+	if osver.find("Windows") > 0: return True
+	else: return False
+
+
+
+# Función Que Comprueba si el SO es Linux, Devuelve TRUE/FALSE
+def isLinux():
+	
+	osver = os.popen("ver").read()
+	
+	if osver.find("Linux") > 0: return True
+	else: return False
+
+
+
+# Función Que Comprueba si es Python Versión 2, Devuelve TRUE/FALSE
+def isPyver2():
+	
+	xD=sys.version[0]
+	
+	if int(xD) == 2: return True
+	else: return False
+
+
+
+# Función Que Comprueba si es Python Versión 3, Devuelve TRUE/FALSE
+def isPyver3():
+	
+	xD=sys.version[0]
+	
+	if int(xD) == 3: return True
+	else: return False
+
+#=======================================================================
 
 def PressON(Cadena=""):		# Permite Capturar 1 Caracter Que se Escriba en Pantalla,
 							# Como un Input() pero de 1 solo caracter.
@@ -187,23 +274,9 @@ def PressON(Cadena=""):		# Permite Capturar 1 Caracter Que se Escriba en Pantall
 
 
 
-def Pause(Quiet=True):		# Hace Una Pausa.
-	
-	if Quiet: os.system("Pause > Nul")		# No muestra Nada En Pantalla.
-	
-	else: os.system("Pause")		# Muestra En Pantalla: Presione una tecla para continuar...
-
-
-
 def Clear():		# Limpia Pantalla.
 	
 	os.system("Cls")
-
-
-
-def Sleep(Num=1.5):	# Hace una Pausa Temporal.
-	
-	time.sleep(Num)
 
 
 
@@ -294,7 +367,7 @@ def Chk_WiFi(Cadena):
 		
 		if RxD == False:
 						
-			os.system("cls")
+			Clear()
 		
 			print("\n\n\t [+] Lista De Interfacez De Red Disponibles:")
 			
@@ -923,7 +996,7 @@ def Main():
 		os.system("Title Pandoraz.py                "+\
 				"By: LawlietJH                "+Version+"    ")
 	
-		print("\n\n\t\t [!] Escaneando La Red Wifi!")
+		print("\n\n\t\t [!] Escaneando La Red Wifi!"), Sleep()
 	except:
 		pass
 	
@@ -953,7 +1026,12 @@ def Main():
 
 if __name__ == "__main__":
 	
-	if isWindows(): Main()
+	if isWindows():
+		
+		if isPyver3(): Main()
+		else:
+			print("\n\n\t Compatible Solo Con Versiones 3.5.X y 3.6.X de Python.")
+			Pause()
 	else:
 		print("\n\n\t Compatible Solo Con Windows.")
 		Pause()
