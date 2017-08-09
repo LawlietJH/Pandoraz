@@ -1,13 +1,14 @@
 # Pandoraz
 ## Obten Contraseñas De Redes Wi-Fi En Windows con Python.
 ## [+] Contraseñas: Totalplay, TOTALPLAY, Ubee y Huawei.
-### Versión Actual: v1.5.5
+## Versión Actual: v1.5.6 Estable.
 
 ### Compatibilidades:
 
    * __[+] Windows.__
-   * __[+] Python 3.5.X + pip instalado.__
-   * __[+] Python 3.6.X + pip instalado.__
+   * __[+] Python 3.4.X.__
+   * __[+] Python 3.5.X.__
+   * __[+] Python 3.6.X.__
 
 - - -
 
