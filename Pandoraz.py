@@ -1,5 +1,5 @@
 # -*- Coding: UTF-8 -*-
-# Python 3
+# Python 3.5
 # Windows
 #
 #   ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ██████╗  █████╗ ███████╗
@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.5.2
+#                                                               v1.5.3
 
 import datetime
 import random
@@ -20,7 +20,7 @@ import os
 
 
 
-Version = "v1.5.2"
+Version = "v1.5.3"
 
 
 
@@ -152,6 +152,15 @@ except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
 
 
 #=======================================================================
+
+
+
+def isWindows():
+	
+	osver = os.popen("ver").read()
+	
+	if osver.find("Windows") > 0: return True
+	else: return False
 
 
 
@@ -944,5 +953,8 @@ def Main():
 
 if __name__ == "__main__":
 	
-	Main()
+	if isWindows(): Main()
+	else:
+		print("\n\n\t Compatible Solo Con Windows.")
+		Pause()
 
