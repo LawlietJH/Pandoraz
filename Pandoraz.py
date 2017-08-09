@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.5.4
+#                                                               v1.5.5
 
 import datetime
 import random
@@ -21,7 +21,7 @@ import os
 
 
 
-Version = "v1.5.4"
+Version = "v1.5.5"
 
 
 
@@ -493,6 +493,12 @@ def ObtenerRedes():
 	for x in Cadena:
 		
 		if "SSID" in x:
+			
+			if "Ç­" in x: x = x.replace("Ç­", "á")
+			elif "Ç¸" in x: x = x.replace("Ç¸", "é")
+			elif "Çð" in x: x = x.replace("Çð", "í")
+			elif "Çü" in x: x = x.replace("Çü", "ó")
+			elif "Ç§" in x: x = x.replace("Ç§", "ú")
 			
 			Cont += 1
 			x = x.split(" : ")[1]
