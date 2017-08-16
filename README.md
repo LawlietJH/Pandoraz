@@ -3,18 +3,23 @@
 ## [+] Contraseñas: Totalplay, TOTALPLAY, Ubee y Huawei.
 ## Versión Actual: v1.5.7 Ejecutable.
 
-### Compatibilidades:
+### Requisitos y Compatibilidades:
 
 ___Pandoraz.py:___
 
-   * __[+] Windows.__
-   * __[+] Python 3.4.X.__
-   * __[+] Python 3.5.X.__
-   * __[+] Python 3.6.X.__
+   * __Sistema Oprativo:__
+     * __[+] Windows.__
+     
+   * __Versión de Python:__
+     * __[+] Python 3.4.X.__
+     * __[+] Python 3.5.X.__
+     * __[+] Python 3.6.X.__
 
 ___Pandoraz.exe:___
 
-   * __[+] Windows.__
+   * __Sistema Oprativo:__
+     * __[+] Windows.__
+     
    * __... No Requiere Nada Más, Solo Ejecutarlo.__
    
 - - -
@@ -41,7 +46,7 @@ __Pandoraz.exe__
 
 __Pandoraz.py__
 
-![Banner](Capturas/Banner.png "Banners")
+![Banner](Capturas/Banners.png "Banners")
 
 - - -
 ### Capturas:
