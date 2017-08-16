@@ -13,7 +13,7 @@
 #                                                               vex1.0
 # vex = Versión Exe.
 
-from WinColor import *
+from WinColor import *		# Descargar: https://github.com/LawlietJH/WinColor.
 import keyboard
 import win32api
 import datetime
