@@ -262,7 +262,7 @@ def ObtenerRedes():
 		Bool = True
 		Cadena = Chk_WiFi(Cadena)
 		
-	os.system("cls && Title Pandoraz.py                "+\
+	os.system("cls && Title Pandoraz.exe                "+\
 			"By: LawlietJH                "+Version+"    ")
 	
 	Cadena = Cadena.split("\n")
