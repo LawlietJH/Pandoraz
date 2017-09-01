@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.6.2
+#                                                               v1.6.4
 #                                                               vex1.1
 # vex = Versión Exe.
 
@@ -30,7 +30,7 @@ import os
 
 
 
-Version = "v1.6.2 - vex1.1"
+Version = "v1.6.4 - vex1.1"
 GitHub = "https://github.com/LawlietJH/Pandoraz"
 
 B_PANDORA1, B_Z1 = "      ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ██████╗  █████╗ ", "███████╗"
@@ -69,7 +69,7 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 	color("VC"), print("\n\t\t\t    "+A_L2, end=""), color("V"), print(A_AWLIET2, end=""), color("VC"), print(A_JH2, end=""),
 	color("VC"), print("\n\t\t\t    "+A_L3, end=""), color("V"), print(A_AWLIET3, end=""), color("VC"), print(A_JH3, end="")
 	print("\n")
-	color("RC"), print("\n\t\t\t\tv", end=""), color("PC"), print("1.6.2", end="")
+	color("RC"), print("\n\t\t\t\tv", end=""), color("PC"), print("1.6.4", end="")
 	color("RC"), print(" -- vex", end=""), color("PC"), print("1.1\n\n")
 	
 	color("V"), print("\t\t Descarga: ", end=""), color("AZC"), print(GitHub), color("VC")
@@ -302,8 +302,6 @@ def ObtenerRedes():
 		elif "Autentica" in x:
 			
 			x = x.split(" : ")[1].strip()
-			#~ print("<" + x + ">")
-			#~ Pause()
 			if "-" in x:
 				x = x.replace("Personal", "PSK")
 				Encrip.append(x.split("-")[0])
@@ -317,8 +315,6 @@ def ObtenerRedes():
 			
 			x = x.split(" : ")[1].strip()
 			Cifrado.append(x)
-			#~ print("<" + x + ">")
-			#~ Pause()
 			
 		elif "Se" in x:
 			
@@ -408,7 +404,9 @@ def ImprimirListaWifi(Datos):
 	
 	Red = False
 	Redes = []
+	MAC = []
 	Cont = 0
+	Con = 0
 	
 	try:
 		
@@ -424,11 +422,11 @@ def ImprimirListaWifi(Datos):
 		color("AZ"), print(" (", end="")
 		color("AZC"), print("BSSID", end="")
 		color("AZ"), print(")   | ", end="")
-		color("R"), print("ENC", end="")
+		color("RC"), print("ENC", end="")
 		color("AZ"), print(" | ", end="")
-		color("R"), print("CIF", end="")
+		color("RC"), print("CIF", end="")
 		color("AZ"), print(" | ", end="")
-		color("R"), print("AUT", end="")
+		color("RC"), print("AUT", end="")
 		color("AZ"), print(" |", end="")
 		color("R"), print("\n =============================================================================\n")
 		
@@ -437,9 +435,17 @@ def ImprimirListaWifi(Datos):
 			if x < 9:
 				
 				if len(Datos["ESSID"][Cont]) < 20:
-					color("RC"), print("  0{}".format(x+1), end="")
-					color("AZC"), print(" - ", end="")
-					color("VC"), print("{}".format(Datos["ESSID"][Cont]), end=" "*(20-len(Datos["ESSID"][Cont])))
+					
+					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
+					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
+					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
+					or "Huawei" in Datos["ESSID"][Cont]:
+						color("BB"), print(" *", end="")
+						color("RC"), print(" {}".format(x+1), end=""), color("AZC"), print(" - ", end="")
+						color("VC"), print("{}".format(Datos["ESSID"][Cont]), end=" "*(20-len(Datos["ESSID"][Cont])))
+					else:
+						color("RC"), print("   {}".format(x+1), end=""), color("AZC"), print(" - ", end="")
+						color("VC"), print("{}".format(Datos["ESSID"][Cont]), end=" "*(20-len(Datos["ESSID"][Cont])))
 					
 					if len(Datos["Senial"][Cont]) == 6:
 						color("AGM"), print("{}".format(Datos["Senial"][Cont][:3]), end="")
@@ -451,34 +457,43 @@ def ImprimirListaWifi(Datos):
 						color("AGM"), print("  {}".format(Datos["Senial"][Cont][:1]), end="")
 						color("AGMC"), print("%    ", end="")
 						
-					if len(Datos["Canal"][Cont]) == 2:
-						color("AM"), print("  {}   ".format(Datos["Canal"][Cont]), end="")
-					elif len(Datos["Canal"][Cont]) == 3:
-						color("AM"), print(" {}   ".format(Datos["Canal"][Cont]), end="")
-						
-					color("V"), print("{}  ".format(Datos["BSSID"][Cont]), end="")
+					if len(Datos["Canal"][Cont]) == 2: color("AM"), print("  {}   ".format(Datos["Canal"][Cont]), end="")
+					elif len(Datos["Canal"][Cont]) == 3: color("AM"), print(" {}   ".format(Datos["Canal"][Cont]), end="")
+					
+					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
+					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
+					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
+					or "Huawei" in Datos["ESSID"][Cont]:
+						MAC = Datos["BSSID"][Cont].split(":")
+						for byte in MAC:
+							Con+=1; color("VC"), print(byte, end=""),
+							if len(MAC) == Con: color("V"), print("  ", end=""); Con = 0
+							else: color("V"), print(":", end="")
+					else: color("V"), print("{}  ".format(Datos["BSSID"][Cont]), end="")
 					
 					if Datos["Cifra"][Cont] == "WEP": Datos["Encri"][Cont] = "WEP"
 					
-					if len(Datos["Encri"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Encri"][Cont]), end="")
-					elif len(Datos["Encri"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Encri"][Cont]), end="")
+					if len(Datos["Encri"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Encri"][Cont]), end="")
+					elif len(Datos["Encri"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Encri"][Cont]), end="")
 						
-					if len(Datos["Cifra"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Cifra"][Cont]), end="")
-					elif len(Datos["Cifra"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Cifra"][Cont]), end="")
+					if len(Datos["Cifra"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Cifra"][Cont]), end="")
+					elif len(Datos["Cifra"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Cifra"][Cont]), end="")
 						
-					if len(Datos["Auten"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Auten"][Cont]))
-					elif len(Datos["Auten"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Auten"][Cont]))
+					if len(Datos["Auten"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Auten"][Cont]))
+					elif len(Datos["Auten"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Auten"][Cont]))
 					
 				else:
-					color("RC"), print(" 0{}".format(x+1), end="")
-					color("AZC"), print(" - ", end="")
-					color("VC"), print("{}\n".format(Datos["ESSID"][Cont]), end=" "*33)
+					
+					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
+					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
+					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
+					or "Huawei" in Datos["ESSID"][Cont]:
+						color("BB"), print(" *", end="")
+						color("RC"), print(" {}".format(x+1), end=""), color("AZC"), print(" - ", end="")
+						color("VC"), print("{}\n".format(Datos["ESSID"][Cont]), end=" "*27)
+					else:
+						color("RC"), print("   {}".format(x+1), end=""), color("AZC"), print(" - ", end="")
+						color("VC"), print("{}\n".format(Datos["ESSID"][Cont]), end=" "*27)
 					
 					if len(Datos["Senial"][Cont]) == 6:
 						color("AGM"), print("{}".format(Datos["Senial"][Cont][:3]), end="")
@@ -490,35 +505,44 @@ def ImprimirListaWifi(Datos):
 						color("AGM"), print("  {}".format(Datos["Senial"][Cont][:1]), end="")
 						color("AGMC"), print("%    ", end="")
 						
-					if len(Datos["Canal"][Cont]) == 2:
-						color("AM"), print("  {}   ".format(Datos["Canal"][Cont]), end="")
-					elif len(Datos["Canal"][Cont]) == 3:
-						color("AM"), print(" {}   ".format(Datos["Canal"][Cont]), end="")
-						
-					color("V"), print("{}  ".format(Datos["BSSID"][Cont]), end="")
+					if len(Datos["Canal"][Cont]) == 2: color("AM"), print("  {}   ".format(Datos["Canal"][Cont]), end="")
+					elif len(Datos["Canal"][Cont]) == 3: color("AM"), print(" {}   ".format(Datos["Canal"][Cont]), end="")
+					
+					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
+					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
+					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
+					or "Huawei" in Datos["ESSID"][Cont]:
+						MAC = Datos["BSSID"][Cont].split(":")
+						for byte in MAC:
+							Con+=1; color("VC"), print(byte, end=""),
+							if len(MAC) == Con: color("V"), print("  ", end=""); Con = 0
+							else: color("V"), print(":", end="")
+					else: color("V"), print("{}  ".format(Datos["BSSID"][Cont]), end="")
 					
 					if Datos["Cifra"][Cont] == "WEP": Datos["Encri"][Cont] = "WEP"
 					
-					if len(Datos["Encri"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Encri"][Cont]), end="")
-					elif len(Datos["Encri"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Encri"][Cont]), end="")
+					if len(Datos["Encri"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Encri"][Cont]), end="")
+					elif len(Datos["Encri"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Encri"][Cont]), end="")
 						
-					if len(Datos["Cifra"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Cifra"][Cont]), end="")
-					elif len(Datos["Cifra"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Cifra"][Cont]), end="")
+					if len(Datos["Cifra"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Cifra"][Cont]), end="")
+					elif len(Datos["Cifra"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Cifra"][Cont]), end="")
 						
-					if len(Datos["Auten"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Auten"][Cont]))
-					elif len(Datos["Auten"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Auten"][Cont]))
+					if len(Datos["Auten"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Auten"][Cont]))
+					elif len(Datos["Auten"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Auten"][Cont]))
 			else:
 				
 				if len(Datos["ESSID"][Cont]) < 20:
-					color("RC"), print("  {}".format(x+1), end="")
-					color("AZC"), print(" - ", end="")
-					color("VC"), print("{}".format(Datos["ESSID"][Cont]), end=" "*(20-len(Datos["ESSID"][Cont])))
+					
+					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
+					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
+					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
+					or "Huawei" in Datos["ESSID"][Cont]:
+						color("BB"), print(" *", end="")
+						color("RC"), print("{}".format(x+1), end=""), color("AZC"), print(" - ", end="")
+						color("VC"), print("{}".format(Datos["ESSID"][Cont]), end=" "*(20-len(Datos["ESSID"][Cont])))
+					else:
+						color("RC"), print("  {}".format(x+1), end=""), color("AZC"), print(" - ", end="")
+						color("VC"), print("{}".format(Datos["ESSID"][Cont]), end=" "*(20-len(Datos["ESSID"][Cont])))
 					
 					if len(Datos["Senial"][Cont]) == 6:
 						color("AGM"), print("{}".format(Datos["Senial"][Cont][:3]), end="")
@@ -530,33 +554,43 @@ def ImprimirListaWifi(Datos):
 						color("AGM"), print("  {}".format(Datos["Senial"][Cont][:1]), end="")
 						color("AGMC"), print("%    ", end="")
 						
-					if len(Datos["Canal"][Cont]) == 2:
-						color("AM"), print("  {}   ".format(Datos["Canal"][Cont]), end="")
-					elif len(Datos["Canal"][Cont]) == 3:
-						color("AM"), print(" {}   ".format(Datos["Canal"][Cont]), end="")
-						
-					color("V"), print("{}  ".format(Datos["BSSID"][Cont]), end="")
+					if len(Datos["Canal"][Cont]) == 2: color("AM"), print("  {}   ".format(Datos["Canal"][Cont]), end="")
+					elif len(Datos["Canal"][Cont]) == 3: color("AM"), print(" {}   ".format(Datos["Canal"][Cont]), end="")
+					
+					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
+					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
+					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
+					or "Huawei" in Datos["ESSID"][Cont]:
+						MAC = Datos["BSSID"][Cont].split(":")
+						for byte in MAC:
+							Con+=1; color("VC"), print(byte, end=""),
+							if len(MAC) == Con: color("V"), print("  ", end=""); Con = 0
+							else: color("V"), print(":", end="")
+					else: color("V"), print("{}  ".format(Datos["BSSID"][Cont]), end="")
 					
 					if Datos["Cifra"][Cont] == "WEP": Datos["Encri"][Cont] = "WEP"
 					
-					if len(Datos["Encri"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Encri"][Cont]), end="")
-					elif len(Datos["Encri"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Encri"][Cont]), end="")
+					if len(Datos["Encri"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Encri"][Cont]), end="")
+					elif len(Datos["Encri"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Encri"][Cont]), end="")
 						
-					if len(Datos["Cifra"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Cifra"][Cont]), end="")
-					elif len(Datos["Cifra"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Cifra"][Cont]), end="")
+					if len(Datos["Cifra"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Cifra"][Cont]), end="")
+					elif len(Datos["Cifra"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Cifra"][Cont]), end="")
 						
-					if len(Datos["Auten"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Auten"][Cont]))
-					elif len(Datos["Auten"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Auten"][Cont]))
+					if len(Datos["Auten"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Auten"][Cont]))
+					elif len(Datos["Auten"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Auten"][Cont]))
+				
 				else:
-					color("RC"), print(" {}".format(x+1), end="")
-					color("AZC"), print(" - ", end="")
-					color("VC"), print("{}\n".format(Datos["ESSID"][Cont]), end=" "*33)
+					
+					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
+					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
+					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
+					or "Huawei" in Datos["ESSID"][Cont]:
+						color("BB"), print(" *", end="")
+						color("RC"), print("{}".format(x+1), end=""), color("AZC"), print(" - ", end="")
+						color("VC"), print("{}\n".format(Datos["ESSID"][Cont]), end=" "*27)
+					else:
+						color("RC"), print("  {}".format(x+1), end=""), color("AZC"), print(" - ", end="")
+						color("VC"), print("{}\n".format(Datos["ESSID"][Cont]), end=" "*27)
 					
 					if len(Datos["Senial"][Cont]) == 6:
 						color("AGM"), print("{}".format(Datos["Senial"][Cont][:3]), end="")
@@ -568,29 +602,30 @@ def ImprimirListaWifi(Datos):
 						color("AGM"), print("  {}".format(Datos["Senial"][Cont][:1]), end="")
 						color("AGMC"), print("%    ", end="")
 						
-					if len(Datos["Canal"][Cont]) == 2:
-						color("AM"), print("  {}   ".format(Datos["Canal"][Cont]), end="")
-					elif len(Datos["Canal"][Cont]) == 3:
-						color("AM"), print(" {}   ".format(Datos["Canal"][Cont]), end="")
-						
-					color("V"), print("{}  ".format(Datos["BSSID"][Cont]), end="")
+					if len(Datos["Canal"][Cont]) == 2: color("AM"), print("  {}   ".format(Datos["Canal"][Cont]), end="")
+					elif len(Datos["Canal"][Cont]) == 3: color("AM"), print(" {}   ".format(Datos["Canal"][Cont]), end="")
+					
+					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
+					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
+					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
+					or "Huawei" in Datos["ESSID"][Cont]:
+						MAC = Datos["BSSID"][Cont].split(":")
+						for byte in MAC:
+							Con+=1; color("VC"), print(byte, end=""),
+							if len(MAC) == Con: color("V"), print("  ", end=""); Con = 0
+							else: color("V"), print(":", end="")
+					else: color("V"), print("{}  ".format(Datos["BSSID"][Cont]), end="")
 					
 					if Datos["Cifra"][Cont] == "WEP": Datos["Encri"][Cont] = "WEP"
 					
-					if len(Datos["Encri"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Encri"][Cont]), end="")
-					elif len(Datos["Encri"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Encri"][Cont]), end="")
+					if len(Datos["Encri"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Encri"][Cont]), end="")
+					elif len(Datos["Encri"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Encri"][Cont]), end="")
 						
-					if len(Datos["Cifra"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Cifra"][Cont]), end="")
-					elif len(Datos["Cifra"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Cifra"][Cont]), end="")
+					if len(Datos["Cifra"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Cifra"][Cont]), end="")
+					elif len(Datos["Cifra"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Cifra"][Cont]), end="")
 						
-					if len(Datos["Auten"][Cont]) == 4:
-						color("VC"), print("{}  ".format(Datos["Auten"][Cont]))
-					elif len(Datos["Auten"][Cont]) == 3:
-						color("VC"), print("{}   ".format(Datos["Auten"][Cont]))
+					if len(Datos["Auten"][Cont]) == 4: color("VC"), print("{}  ".format(Datos["Auten"][Cont]))
+					elif len(Datos["Auten"][Cont]) == 3: color("VC"), print("{}   ".format(Datos["Auten"][Cont]))
 				
 			getNameRedes(Datos, Cont)
 			
@@ -662,6 +697,8 @@ def getPassRedes():
 	
 	global Redes, Pwd
 	
+	MAC = []
+	Con = 0
 	Cont = 0
 	Cony = 0
 	Name = ""
@@ -715,7 +752,13 @@ def getPassRedes():
 				Pass = getPass(Name, X)
 				Pwd[Name] = Pass
 				
-				color("V"), print("{}   ".format(X), end="")
+				MAC = X.split(":")
+				for byte in MAC:
+					Con+=1; color("VC"), print(byte, end=""),
+					if len(MAC) == Con: color("V"), print("  ", end=""); Con = 0
+					else: color("V"), print(":", end="")
+				
+				#~ color("V"), print("{}   ".format(X), end="")
 				color("AGMC"), print("{}".format(Pass))
 				
 				Cont = 0
