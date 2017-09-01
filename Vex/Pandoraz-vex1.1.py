@@ -69,8 +69,8 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 	color("VC"), print("\n\t\t\t    "+A_L2, end=""), color("V"), print(A_AWLIET2, end=""), color("VC"), print(A_JH2, end=""),
 	color("VC"), print("\n\t\t\t    "+A_L3, end=""), color("V"), print(A_AWLIET3, end=""), color("VC"), print(A_JH3, end="")
 	print("\n")
-	color("RC"), print("\n\t\t\t\tv", end=""), color("PC"), print("1.5.7", end="")
-	color("RC"), print(" -- vex", end=""), color("PC"), print("1.0\n\n")
+	color("RC"), print("\n\t\t\t\tv", end=""), color("PC"), print("1.6.2", end="")
+	color("RC"), print(" -- vex", end=""), color("PC"), print("1.1\n\n")
 	
 	color("V"), print("\t\t Descarga: ", end=""), color("AZC"), print(GitHub), color("VC")
 	try:
