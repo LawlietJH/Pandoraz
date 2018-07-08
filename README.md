@@ -1,7 +1,8 @@
 # Pandoraz
 ## Obten Contraseñas De Redes Wi-Fi En Windows con Python.
-## [+] Contraseñas: Totalplay, TOTALPLAY, Ubee y Huawei.
-## Versión Actual: v1.5.7 Ejecutable.
+## [+] Contraseñas: Totalplay, TOTALPLAY, Huawei, Ubee, Megacable, TP-LINK, DG860 y TG862.
+## Versión Script (v): 1.6.9
+## Versión Ejecutable (vex): 1.2
 
 ### Requisitos y Compatibilidades:
 
@@ -23,6 +24,19 @@ ___Pandoraz.exe:___
    * __... No Requiere Nada Más, Solo Ejecutarlo.__
    
 - - -
+
+## Redes Que Posiblemente se Obtenga su Contraseña:
+
+***Con Nombres:***
+
+ * __"UbeeXXXX"__
+ * __"MegacableXXXX"__
+ * __"TP-LINK_XXXXXX"__
+ * __"Totalplay-XXXX"__
+ * __"Huawei-XXXX-XXXX"__
+ * __"TOTALPLAY_XXXXXX"__
+ * __"DG860XXX"__
+ * __"TG862XXX"__
 
 __Pandoraz.exe__
 
@@ -89,18 +103,7 @@ __Pandoraz.py__
 
 * [+] Si existe más de una __Interfaz de Red Wi-Fi__, aparecerá la opción de elegir una de las __Interfaces__ disponibles.
 
-* [+] Las __Contraseñas__ Obtenidas de Redes (Como ___Totalplay, TOTALPLAY, Ubee, Huawei___, ect) Se Almacenarán __Automaticamente__ en un __Archivo__ Llamado 📶 ___Pass.ZioN___
+* [+] Las __Contraseñas__ Obtenidas de Redes (Como ___Totalplay, Ubee, Huawei___, etc.) Se Almacenarán __Automaticamente__ en un __Archivo__ Llamado 📶 ___Pass.ZioN___
   
   * [ \* ] Si de alguna red se consigue su __Contraseña__ y el nombre de la red ya existe en el archivo ___Pass.ZioN___, no se repetirá la red en el archivo.
 
-
-## Redes Que Posiblemente se Obtenga su Contraseña:
-
-***Con Nombres:***
-
- * __"UbeeXXXX"__
- * __"Totalplay-XXXX"__
- * __"Huawei-XXXX-XXXX"__
- * __"TOTALPLAY_XXXXXX"__
- * __"DG860XXX"__
- * __"TG862XXX"__
