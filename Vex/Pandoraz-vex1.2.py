@@ -9,7 +9,7 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.6.8
+#                                                               v1.6.9
 #                                                               vex1.2
 # v = Versión Script.
 # vex = Versión Exe.
@@ -32,7 +32,7 @@ import os
 
 WinSize(80, 45)
 
-Version = "v1.6.7 - vex1.2"
+Version = "v1.6.9 - vex1.2"
 GitHub = "https://github.com/LawlietJH/Pandoraz"
 
 B_PANDORA1, B_Z1 = "      ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ██████╗  █████╗ ", "███████╗"
@@ -794,6 +794,14 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Senial"][Pos])
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
+			
+	elif "TP-LINK" in str(Datos["ESSID"][Pos]):	# Para redes TP-LINK_XXXXXX
+			
+			Red = True
+			Redes.append(Datos["ESSID"][Pos])
+			Redes.append(Datos["Senial"][Pos])
+			Redes.append(Datos["Canal"][Pos])
+			Redes.append(Datos["BSSID"][Pos])
 	
 	#~ elif len(Datos["ESSID"][Pos]) == 6:		# Para redes Cisco/Pegatron
 			
@@ -863,7 +871,13 @@ def getPass(Nombre, MAC):
 		Dec = str(int(Hex_Dec(Bytes))-4)
 		Hex = Dec_Hex(Dec)
 		
-		Pass = ''.join(MAC.split(":")[2:4]) + Hex
+		Pass = ''.join(MAC.split(":")[1:4]) + Hex
+		
+	elif "TP-LINK" in Nombre:		# Para redes TP-LINK_XXXXXX de Megacable. 
+		
+		MAC = MAC.split(":")
+		
+		Pass = ''.join(MAC[2:]).upper().replace(':','')
 		
 	elif "DG860" in Nombre or "TG862" in Nombre:	# Para Redes Arris DG860XXX/TG862XXX.
 		
