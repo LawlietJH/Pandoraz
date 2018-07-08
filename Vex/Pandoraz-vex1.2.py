@@ -9,13 +9,12 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.6.6
+#                                                               v1.6.7
 #                                                               vex1.1
 # vex = Versión Exe.
 
 from WinColor import *		# Descargar: https://github.com/LawlietJH/WinColor.
-import keyboard
-import win32api
+
 import datetime
 import random
 import locale 
@@ -30,7 +29,9 @@ import os
 
 
 
-Version = "v1.6.6 - vex1.1"
+WinSize(80, 45)
+
+Version = "v1.6.7 - vex1.2"
 GitHub = "https://github.com/LawlietJH/Pandoraz"
 
 B_PANDORA1, B_Z1 = "      ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ██████╗  █████╗ ", "███████╗"
@@ -52,6 +53,61 @@ A_L3, A_AWLIET3, A_JH3 = "╩═╝", "┴ ┴└┴┘┴─┘┴└─┘ ┴
 
 
 
+def ChkDep():
+	
+	Key1, Key2 = False, False
+	
+	print('\n\n\t', end=''), Mark("+"), color("VC"), print(' Comprobando Dependencias...\n\n')
+	
+	Cadena = os.popen("python -m pip freeze").read().split('\n')
+	
+	for x in Cadena:
+		
+		x = x.split('==')[0]
+		if x == 'keyboard': Key1 = True 
+		if x == 'pywin32':  Key2 = True 
+	
+	if Key1: sys.stdout.write('\n\t\t Módulo Keyboard ... OK')
+	else:
+		
+		sys.stdout.write('\n\t\t Módulo Keyboard ... Instalando...')
+		Cadena = os.popen("python -m pip install keyboard").read()
+		# ~ print(Cadena)
+		sys.stdout.write('\r\t\t Módulo Keyboard ... OK              ')
+	
+	if Key2: sys.stdout.write('\n\n\t\t Módulo Pywin32  ... OK')
+	else:
+		
+		sys.stdout.write('\n\n\t\t Módulo Pywin32  ... Instalando...')
+		Cadena = os.popen("python -m pip install pywin32").read()
+		# ~ print(Cadena)
+		sys.stdout.write('\r\\tt Módulo Pywin32  ... OK              ')
+			
+	if not Key1 or not Key2:
+		
+		print('\n\n\t\t Dependencias Instaladas, vulve a abrir el Programa.\n\n'); time.sleep(2)
+		
+		for x in range(3):
+			
+			os.system('cls'); print('\n\n\t\t Cerrando '); time.sleep(.1)
+			os.system('cls'); print('\n\n\t\t Cerrando .'); time.sleep(.2)
+			os.system('cls'); print('\n\n\t\t Cerrando . .'); time.sleep(.2)
+			os.system('cls'); print('\n\n\t\t Cerrando . . .'); time.sleep(.2)
+			
+		sys.exit(0)
+
+
+
+ChkDep()
+
+import keyboard
+import win32api
+
+
+
+#=======================================================================
+
+
 def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 	
 	os.system("cls && Title Pandoraz.exe                "+\
@@ -69,7 +125,7 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 	color("VC"), print("\n\t\t\t    "+A_L2, end=""), color("V"), print(A_AWLIET2, end=""), color("VC"), print(A_JH2, end=""),
 	color("VC"), print("\n\t\t\t    "+A_L3, end=""), color("V"), print(A_AWLIET3, end=""), color("VC"), print(A_JH3, end="")
 	print("\n")
-	color("RC"), print("\n\t\t\t\tv", end=""), color("PC"), print("1.6.4", end="")
+	color("RC"), print("\n\t\t\t\tv", end=""), color("PC"), print(Version.split(' -')[0][1:], end="")
 	color("RC"), print(" -- vex", end=""), color("PC"), print("1.1\n\n")
 	
 	color("V"), print("\t\t Descarga: ", end=""), color("AZC"), print(GitHub), color("VC")
@@ -336,6 +392,7 @@ def ObtenerRedes():
 			
 			if Cont == 1:
 				
+				if len(x) == 0: x = '--- Red Oculta ---'
 				ESSID.append(x)
 				Tam += 1
 				
@@ -356,9 +413,10 @@ def ObtenerRedes():
 				x = x.replace("Abierta", "Open")
 				Encrip.append(x)
 				Autentic.append(x)
-				
+			
 		elif "Cifrado" in x:
 			
+			x = x.replace("Ninguna", "None")
 			x = x.split(" : ")[1].strip()
 			Cifrado.append(x)
 			
@@ -985,7 +1043,7 @@ def Atajos():
 				dt2 = datetime.datetime.now()
 				dt2 = int(dt2.strftime("%S"))	# Se Obtienen los Segundos Actuales del Reloj.
 					
-				if Z >= 5000:		# Si Falla La Coincidencia De Tiempos, Esto Terminara el Ciclo en Aproximadamente un Segundo. 
+				if Z >= 6000:		# Si Falla La Coincidencia De Tiempos, Esto Terminara el Ciclo en Aproximadamente un Segundo. 
 					
 					randy = random.choice(Lista)
 					print("\n\n\n\t\t ", end=""), Mark("+"), color("VC"), print(" " + randy)
@@ -1025,8 +1083,6 @@ def Imp():	# Limpia El Buffer (Flush)
 
 
 def Main():
-	
-	WinSize(80, 50)
 	
 	try:
 		locale.setlocale(locale.LC_ALL, "esp")
