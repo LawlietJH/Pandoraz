@@ -9,8 +9,9 @@
 #   ██║     ██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║  ██║██║  ██║███████╗
 #   ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 #                                                         By: LawlietJH
-#                                                               v1.6.7
-#                                                               vex1.1
+#                                                               v1.6.8
+#                                                               vex1.2
+# v = Versión Script.
 # vex = Versión Exe.
 
 from WinColor import *		# Descargar: https://github.com/LawlietJH/WinColor.
@@ -53,7 +54,7 @@ A_L3, A_AWLIET3, A_JH3 = "╩═╝", "┴ ┴└┴┘┴─┘┴└─┘ ┴
 
 
 
-def ChkDep():
+def ChkDep(): # Checando Dependencias.
 	
 	Key1, Key2 = False, False
 	
@@ -81,21 +82,24 @@ def ChkDep():
 		sys.stdout.write('\n\n\t\t Módulo Pywin32  ... Instalando...')
 		Cadena = os.popen("python -m pip install pywin32").read()
 		# ~ print(Cadena)
-		sys.stdout.write('\r\\tt Módulo Pywin32  ... OK              ')
-			
+		sys.stdout.write('\r\t\t Módulo Pywin32  ... OK              ')
+	
+	time.sleep(.5)
+	
 	if not Key1 or not Key2:
 		
-		print('\n\n\t\t Dependencias Instaladas, vulve a abrir el Programa.\n\n'); time.sleep(2)
+		print('\n\n\t', end=''), Mark("+"), color("VC"), print(' Dependencias Instaladas, Vulve a abrir el Programa.\n\n'); time.sleep(3)
 		
 		for x in range(3):
 			
-			os.system('cls'); print('\n\n\t\t Cerrando '); time.sleep(.1)
-			os.system('cls'); print('\n\n\t\t Cerrando .'); time.sleep(.2)
-			os.system('cls'); print('\n\n\t\t Cerrando . .'); time.sleep(.2)
-			os.system('cls'); print('\n\n\t\t Cerrando . . .'); time.sleep(.2)
+			os.system('cls'); print('\n\n\t\t', end=''), Mark("+"), color("VC"), print(' Cerrando '); time.sleep(.1)
+			os.system('cls'); print('\n\n\t\t', end=''), Mark("+"), color("VC"), print(' Cerrando .'); time.sleep(.2)
+			os.system('cls'); print('\n\n\t\t', end=''), Mark("+"), color("VC"), print(' Cerrando . .'); time.sleep(.2)
+			os.system('cls'); print('\n\n\t\t', end=''), Mark("+"), color("VC"), print(' Cerrando . . .'); time.sleep(.2)
 			
 		sys.exit(0)
-
+	
+	time.sleep(.5)
 
 
 ChkDep()
@@ -121,8 +125,8 @@ def Dat():	# Función Que Permite Mostrar Los Datos Del Script.
 	color("AGM"), print(B_PANDORA5, end=""), color("RC"), print(B_Z5, end="\n")
 	color("AGM"), print(B_PANDORA6, end=""), color("RC"), print(B_Z6, end="\n")
 	print("\n")
-	color("VC"), print("\n\t\t\t    "+A_L1, end=""), color("V"), print(A_AWLIET1, end=""), color("VC"), print(A_JH1, end=""),
-	color("VC"), print("\n\t\t\t    "+A_L2, end=""), color("V"), print(A_AWLIET2, end=""), color("VC"), print(A_JH2, end=""),
+	color("VC"), print("\n\t\t\t    "+A_L1, end=""), color("V"), print(A_AWLIET1, end=""), color("VC"), print(A_JH1, end="")
+	color("VC"), print("\n\t\t\t    "+A_L2, end=""), color("V"), print(A_AWLIET2, end=""), color("VC"), print(A_JH2, end="")
 	color("VC"), print("\n\t\t\t    "+A_L3, end=""), color("V"), print(A_AWLIET3, end=""), color("VC"), print(A_JH3, end="")
 	print("\n")
 	color("RC"), print("\n\t\t\t\tv", end=""), color("PC"), print(Version.split(' -')[0][1:], end="")
@@ -144,7 +148,7 @@ def Pause(Quiet=True):		# Hace Una Pausa.
 
 
 
-def Salir(Num=0):	# Fucnión Que Permite Salir Del Script Sin Error Alguno.
+def Salir(Num=0):	# Función Que Permite Salir Del Script Sin Error Alguno.
 	
 	try:
 		Sleep(1.5)
@@ -782,6 +786,14 @@ def getNameRedes(Datos, Pos):
 			Redes.append(Datos["Senial"][Pos])
 			Redes.append(Datos["Canal"][Pos])
 			Redes.append(Datos["BSSID"][Pos])
+			
+	elif "Megacable" in str(Datos["ESSID"][Pos]):	# Para redes MegacableXXXX (De Megacable)
+			
+			Red = True
+			Redes.append(Datos["ESSID"][Pos])
+			Redes.append(Datos["Senial"][Pos])
+			Redes.append(Datos["Canal"][Pos])
+			Redes.append(Datos["BSSID"][Pos])
 	
 	#~ elif len(Datos["ESSID"][Pos]) == 6:		# Para redes Cisco/Pegatron
 			
@@ -841,6 +853,17 @@ def getPass(Nombre, MAC):
 		Hex = Dec_Hex(Dec)
 		
 		Pass = ''.join(MAC.split(":")[1:4]) + Hex
+		
+	elif "Megacable" in Nombre:		# Para redes MegacableXXXX de Megacable. 
+		
+		Byte6 = MAC.split(":")[-1]
+		Byte5 = MAC.split(":")[-2]
+		Bytes = Byte5 + Byte6
+		
+		Dec = str(int(Hex_Dec(Bytes))-4)
+		Hex = Dec_Hex(Dec)
+		
+		Pass = ''.join(MAC.split(":")[2:4]) + Hex
 		
 	elif "DG860" in Nombre or "TG862" in Nombre:	# Para Redes Arris DG860XXX/TG862XXX.
 		
